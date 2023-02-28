@@ -1,0 +1,16 @@
+.Container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+}
+
+.Left-container{
+  height: 100vh;
+  width: 100vw;
+}
+
+.Right-container{
+  height: 100vh;
+  width: 100vw;
+  background-color: white;
+}
