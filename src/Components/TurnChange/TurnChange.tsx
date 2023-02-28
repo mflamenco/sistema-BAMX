@@ -1,10 +1,18 @@
 import React from 'react';
-import './App.css';
+import './TurnChange.css';
 
 function TurnChange() {
 
   return (
-    <div className="App">
+    <div className="Turn-change">
+      <div className="Container">
+        <text className='Label'> En Atención en esta caja</text>
+        <div className="Turn">
+          <text> turno 1</text>
+          <text> comunidad A</text>
+
+        </div>
+      </div>
     </div>
   );
 }
