@@ -6,11 +6,36 @@
 
 .Left-container{
   height: 100vh;
-  width: 100vw;
+  width: 50vw;
 }
 
 .Right-container{
   height: 100vh;
-  width: 100vw;
+  width: 50vw;
   background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5vh;
+}
+
+h1{
+  font-family: 'Bebas Neue', cursive;
+  font-size: 11vmin;
+}
+
+img{
+  width: 24vw;
+  height: 58.9vh;
+}
+
+input{
+  font-family: 'Bebas Neue', cursive;
+  font-size: 2.96vmin;
+  border-color: black;
+}
+
+.fieldset{
+  font-family: 'Bebas Neue', cursive;
 }
