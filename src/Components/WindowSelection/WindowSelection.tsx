@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 const WindowButton = styled(Button)({
   fontSize: "6.17vmin",
   fontWeight: 600,
-  padding: '1.5vh 1vw',
+  padding: '1.5vh 1.5vw',
   color: 'black',
   borderRadius: '7px',
   border: '1px solid #EA2040;',
