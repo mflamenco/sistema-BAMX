@@ -1,0 +1,68 @@
+
+.Root-Container{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.Container {
+  position:absolute;
+  margin: 0 0 0 2.55vw;
+  background-color: white;
+  width: 75.27vw;
+  height: 86.72vh;
+  border-radius: 27px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 7vh;
+}
+
+.Title-Container{
+  display: flex;
+  gap: 2vw;
+}
+
+.Left-Container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Attention-Box-One,
+.Attention-Box-Two{
+  width: 24.72vw;
+  height: 8.98vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2vw;
+  border-radius: 20px;
+  padding: 0vh 4.28vw;
+}
+
+.Attention-Box-One{
+  border: 5px solid #D00C2B;
+}
+
+.Attention-Box-Two{
+  border: 5px solid #FDA9B6;
+}
+
+h2{
+  font-family: 'Bebas Neue', cursive;
+  font-weight: 400;
+}
+
+h3{
+  margin: 0;
+}
+
+img{
+  z-index: 2;
+  width: 6.87vw;
+  height: 16.89vh;
+  margin: 80vh 0vw 0 1vw;
+}
