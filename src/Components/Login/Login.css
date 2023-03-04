@@ -17,25 +17,35 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 5vh;
+  gap: 7vh;
 }
 
 h1{
   font-family: 'Bebas Neue', cursive;
   font-size: 11vmin;
+  text-align: center;
+  word-wrap: break-word;
+  margin: 0 0 2vh 0;
 }
 
 img{
-  width: 24vw;
-  height: 58.9vh;
+  width: 39.65vw;
+  height: 72.5vh;
+  margin-left: -3vw;
 }
 
-input{
-  font-family: 'Bebas Neue', cursive;
-  font-size: 2.96vmin;
-  border-color: black;
+.MuiInputLabel-root,
+.MuiOutlinedInput-root {
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 2.96vmin !important;
+  border-color: black !important;
 }
 
-.fieldset{
-  font-family: 'Bebas Neue', cursive;
+.TextField{
+  width: 20.62vw;
+  height: 7.28vh;
+  margin: 0 0 5vh 0;
 }
+
+
+
