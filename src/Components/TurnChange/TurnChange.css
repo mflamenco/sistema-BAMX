@@ -62,3 +62,11 @@
   gap: 4vh;
 }
 
+.Logout {
+  color:white;
+}
+
+.Logout:hover {
+  color:#E96D10;
+}
+

@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import './TurnChange.css';
-import { ReactComponent as LogoutIcon} from '../../Assets/Logo_bamx.svg';
+import { ReactComponent as LogoutIcon} from '../../Assets/Icon_logoutTest.svg';
 
 const TurnButton = styled(Button)({
   padding: '1vh 0',
@@ -33,7 +33,7 @@ const LogoutButton = styled(Button)({
   ].join(','),
   '&:hover': {
     backgroundColor: 'white',
-    opacity: '70%',
+    opacity: '80%',
     color: '#E96D10',
     
   },
@@ -44,7 +44,7 @@ function TurnChange() {
 
   return (
     <div className="Turn-change">
-      <LogoutButton startIcon={<LogoutIcon />}>Cerrar Sesión</LogoutButton>
+      <LogoutButton startIcon={<LogoutIcon className='Logout' width={'2vw'} />}>Cerrar Sesión</LogoutButton>
       <div className="Container">
         <div className="Container-top">
           <text className='h1'> Actualmente asistiendo a</text>
