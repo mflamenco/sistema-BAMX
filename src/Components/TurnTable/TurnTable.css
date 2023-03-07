@@ -22,23 +22,34 @@
 
 .Title-Container{
   display: flex;
-  gap: 2vw;
+  width: 100%;
+  justify-content:space-evenly;
 }
 
 .Left-Container{
+  width: 40.22%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 2vh;
+}
+
+.Right-Container{
+  width: 59.78%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2vh;
 }
 
 .Attention-Box-One,
 .Attention-Box-Two{
-  width: 24.72vw;
-  height: 8.98vh;
+  width: 24vmin;
+  height: 8vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 2vw;
+  gap: 1.9vw;
   border-radius: 20px;
   padding: 0vh 4.28vw;
 }
@@ -49,15 +60,41 @@
 
 .Attention-Box-Two{
   border: 5px solid #FDA9B6;
+  background-color: #FDA9B6;
+}
+
+.Attention-Box-Three,
+.Attention-Box-Four{
+  width: 56vmin;
+  height: 8vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 4vw;
+  border-radius: 20px;
+  padding: 0vh 4.28vw;
+  padding-right: 0.5vw;
+}
+
+.Attention-Box-Three{
+  border: 5px solid #F56A40;
+}
+
+.Attention-Box-Four{
+  border: 5px solid #F8C4B5;
+  background-color: #F8C4B5;
 }
 
 h2{
   font-family: 'Bebas Neue', cursive;
+  color: #602E36 ;
   font-weight: 400;
+  font-size: 5vmin;
 }
 
 h3{
   margin: 0;
+  font-size: 3.12vmin;
 }
 
 img{

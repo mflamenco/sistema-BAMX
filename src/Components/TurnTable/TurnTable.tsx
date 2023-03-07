@@ -2,6 +2,15 @@ import React from 'react';
 import logo from '../../Assets/Logo_bamx.svg';
 import './TurnTable.css';
 
+const currentDate = new Date()
+var days = ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
+var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const hour = currentDate.getHours()
+const minute = currentDate.getMinutes()
+const numDay = currentDate.getUTCDay()
+const month =  months[currentDate.getMonth()]
+const day = days[currentDate.getDay()]
+
 function TurnTable() {
 
   return (
@@ -35,10 +44,19 @@ function TurnTable() {
             <h2>Nombre de comunidad</h2>
             <h2>Turno</h2>
           </div>
+          <div className="Attention-Box-Three">
+            <h3>Comunidad A</h3>
+            <h3>1</h3>
+          </div>
+          <div className="Attention-Box-Four">
+            <h3>Comunidad B</h3>
+            <h3>2</h3>
+          </div>
+          <div className="Attention-Box-Three">
+            <h3>Comunidad C</h3>
+            <h3>3</h3>
+          </div>
         </div>
-      </div>
-      <div className="Date-Container">
-
       </div>
       <img src={logo}/>
     </div>
