@@ -54,6 +54,7 @@ function WindowSelection() {
           </div>
           <div className="Bottom-Container">
             <WindowButton>Caja D</WindowButton>
+            <WindowButton>Administración</WindowButton>
             <WindowButton>Caja E</WindowButton>
           </div>
         </div>

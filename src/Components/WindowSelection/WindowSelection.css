@@ -1,9 +1,4 @@
 
-.parent{
-  width: 100vw;
-  height: 100vh;
-}
-
 .Root-Container{
   width: 100vw;
   height: 100vh;
@@ -41,7 +36,7 @@
 .Bottom-Container{
   display: flex;
   justify-content: center;
-  gap: 15vw;
+  gap: 8vw;
 }
 
 h1{
