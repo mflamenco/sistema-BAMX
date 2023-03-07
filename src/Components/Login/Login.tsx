@@ -5,6 +5,9 @@ import './Login.css';
 import { styled, ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles';
 
+const api = 'http://127.0.0.1:8000/'
+const token = localStorage.getItem('user-token') || null
+
 const LoginButton = styled(Button)({
   fontSize: '4.44vmin',
   padding: '6px 12px',
