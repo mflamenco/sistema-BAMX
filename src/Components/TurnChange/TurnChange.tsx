@@ -1,7 +1,10 @@
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import './TurnChange.css';
-import { ReactComponent as LogoutIcon} from '../../Assets/Icon_logoutTest.svg';
+import { useCallback, useState } from "react";
+import { ReactComponent as LogoutIcon} from '../../Assets/Icon_logout.svg';
+import { ReactComponent as LinkIcon} from '../../Assets/Icon_link.svg';
+
 
 const TurnButton = styled(Button)({
   padding: '1vh 0',
@@ -22,7 +25,7 @@ const TurnButton = styled(Button)({
   },
 });
 
-const LogoutButton = styled(Button)({
+const BarButton = styled(Button)({
   color: 'white',
   display: 'flex',
   fontSize: '4vmin',
@@ -42,9 +45,41 @@ const LogoutButton = styled(Button)({
 
 function TurnChange() {
 
+  const [hoverLogout, setHoverLogout] = useState('Logout');
+  const [hoverLink, sethoverLink] = useState('Logout');
+
+  const hoverHandler = useCallback((isHover: boolean, indexButton: number) => {
+    if (isHover) {
+      if (indexButton === 0) {
+        setHoverLogout('Logout-hover')
+      } else {
+        sethoverLink('Logout-hover')
+      }
+    } else {
+      if (indexButton === 0) {
+        setHoverLogout('Logout')
+      } else {
+        sethoverLink('Logout')
+      }
+    }
+  }, []);
+
   return (
     <div className="Turn-change">
-      <LogoutButton startIcon={<LogoutIcon className='Logout' width={'2vw'} />}>Cerrar Sesión</LogoutButton>
+      <div className="Button-container">
+        <BarButton 
+        onMouseEnter={() => hoverHandler(true,1)}
+        onMouseLeave={() => hoverHandler(false,1)} 
+        startIcon={<LinkIcon className={hoverLink} width={'2vw'} />} >
+          Actualizar google sheets
+        </BarButton>
+        <BarButton 
+        onMouseEnter={() => hoverHandler(true,0)}
+        onMouseLeave={() => hoverHandler(false,0)} 
+        startIcon={<LogoutIcon className={hoverLogout} width={'2vw'} />} >
+          Cerrar Sesión
+        </BarButton>
+      </div>
       <div className="Container">
         <div className="Container-top">
           <text className='h1'> Actualmente asistiendo a</text>

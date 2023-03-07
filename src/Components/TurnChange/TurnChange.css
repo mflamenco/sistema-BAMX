@@ -1,6 +1,15 @@
 
 .Turn-change {
-  padding: 11.5vh 2.5vw 10.5vh;
+  padding: 5.5vh 2.5vw 7vh;
+}
+
+.Button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2vw;
+  justify-content: flex-end;
+  padding-bottom: 1vh;
 }
 
 .Container {
@@ -65,8 +74,8 @@
 .Logout {
   color:white;
 }
-
-.Logout:hover {
+.Logout-hover {
   color:#E96D10;
 }
+
 
