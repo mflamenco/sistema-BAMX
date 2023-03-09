@@ -7,8 +7,17 @@
   justify-content: flex-start;
 }
 
+.Info-Container{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: absolute;
+  gap: 2vw;
+}
+
 .Container {
-  position:absolute;
   margin: 0 0 0 2.55vw;
   background-color: white;
   width: 75.27vw;
@@ -17,7 +26,7 @@
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  gap: 7vh;
+  gap: 0vh;
 }
 
 .Title-Container{
@@ -28,6 +37,8 @@
 
 .Left-Container{
   width: 40.22%;
+  height: 93%;
+  padding: 4.8vh 0 0 2vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,6 +47,8 @@
 
 .Right-Container{
   width: 59.78%;
+  height: 93%;
+  padding: 4.8vh 0 0 0vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -44,14 +57,13 @@
 
 .Attention-Box-One,
 .Attention-Box-Two{
-  width: 24vmin;
+  width: 39vmin;
   height: 8vh;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 1.9vw;
+  justify-content: space-around;
   border-radius: 20px;
-  padding: 0vh 4.28vw;
+  padding: 0vh 1vw;
 }
 
 .Attention-Box-One{
@@ -85,11 +97,24 @@
   background-color: #F8C4B5;
 }
 
+h1,
+h3{
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+h1{
+  font-size: 4.8vmin;
+}
+
 h2{
   font-family: 'Bebas Neue', cursive;
   color: #602E36 ;
   font-weight: 400;
   font-size: 5vmin;
+  margin: 0;
 }
 
 h3{
@@ -101,5 +126,5 @@ img{
   z-index: 2;
   width: 6.87vw;
   height: 16.89vh;
-  margin: 80vh 0vw 0 1vw;
+  margin: 80vh 0vw 0 1.5vw;
 }
