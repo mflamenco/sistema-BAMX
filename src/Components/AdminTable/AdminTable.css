@@ -55,6 +55,12 @@
   margin-bottom: 4vh;
 }
 
+.css-10hburv-MuiTypography-root{
+  font-family: 'DM Sans', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 3.5vmin !important;
+}
+
 .Logout {
   color:white;
 }

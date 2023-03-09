@@ -7,7 +7,7 @@ import { ReactComponent as LogoutIcon } from '../../Assets/Icon_logout.svg';
 import { ReactComponent as TrashIcon } from '../../Assets/Icon_trash.svg';
 
 import logo from '../../Assets/Logo_bamx.svg';
-import './App.css';
+import './AdminTable.css';
 
 const ItemText = styled(ListItemText)({
   color: '#AC5300',
@@ -71,7 +71,7 @@ const BarButton = styled(Button)({
   },
 });
 
-function TurnChange() {
+function AdminTable() {
 
   const [hoverLogout, setHoverLogout] = useState('Logout');
   const [hoverLink, sethoverLink] = useState('Logout');
@@ -162,4 +162,4 @@ function TurnChange() {
   );
 }
 
-export default TurnChange;
+export default AdminTable;

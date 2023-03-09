@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.css';
-import App from './Cmponents/AdminTable/App';
+import AdminTable from './Components/AdminTable/AdminTable';
 
-function Appp() {
+function App() {
 
   return (
     <div className="App">
-      <App></App>
+      <AdminTable></AdminTable>
     </div>
   );
 }
 
-export default Appp;
+export default App;
