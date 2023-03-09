@@ -1,12 +1,11 @@
 import TextField from '@mui/material/TextField';
 import logo from '../../Assets/Logo_tilted.svg';
 import Button from '@mui/material/Button';
+import React, { useState } from 'react';
+import axios from 'axios';
 import './Login.css';
 import { styled, ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles';
-
-const api = 'http://127.0.0.1:8000/'
-const token = localStorage.getItem('user-token') || null
 
 const LoginButton = styled(Button)({
   fontSize: '4.44vmin',
@@ -21,7 +20,7 @@ const LoginButton = styled(Button)({
   border: '5px solid #EA2040;',
   fontFamily: [
     'Bebas Neue',
-     'cursive',
+    'cursive',
   ].join(','),
   '&:hover': {
     backgroundColor: '#EA2040',
@@ -42,17 +41,39 @@ let theme = createTheme({
 
 function Login() {
 
+  const [user, setUser] = useState(null)
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const api = 'http://localhost:8000/auth'
+  const token = localStorage.getItem('user-token') || null
+
+  const loginFunc = () => {
+    axios
+    .post(api, {
+      username: username,
+      password: password
+    })
+    .then(result => {
+      console.log("siuu")
+    })
+    .catch(error => {
+      console.log(username)
+      console.log(username)
+      console.log("nouu")
+    })
+  }
+
   return (
     <ThemeProvider theme={theme}>
-      <div className="Container">
-        <div className="Left-container">
-          <img src={logo}/>
+      <div className="Login-container">
+        <div className="Login-left-container">
+          <img className="Login-img" src={logo}/>
         </div>
-        <div className="Right-container">
-          <h1> Ingresa con <br/> tu ID </h1>
-          <TextField id="outlined-basic" label="ID" variant="outlined" color='secondary' className='TextField'/>
-          <TextField id="outlined-basic" label="Contraseña" variant="outlined" color='secondary' type='password' className='TextField'/>
-          <LoginButton>Entrar</LoginButton>
+        <div className="Login-right-container">
+          <h1 className="Login-h1"> Ingresa con <br/> tu ID </h1>
+          <TextField value={username} onChange={(newValue) => setUsername(newValue.target.value)} id="username-input" label="ID" variant="outlined" color='secondary' className='TextField'/>
+          <TextField value={password} onChange={(newValue) => setPassword(newValue.target.value)} id="password-input" label="Contraseña" variant="outlined" color='secondary' type='password' className='TextField'/>
+          <LoginButton onClick={loginFunc}>Entrar</LoginButton>
         </div>
       </div>
     </ThemeProvider>

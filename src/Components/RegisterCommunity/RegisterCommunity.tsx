@@ -39,13 +39,13 @@ function RegisterCommunity() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="Root-Container">
-        <div className="Container">
-          <h1>Ingresa el ID de la <br/> comunidad</h1> 
+      <div className="Register-root-container">
+        <div className="Register-container">
+          <h1 className="Register-h1">Ingresa el ID de la <br/> comunidad</h1> 
           <TextField id="outlined-basic" label="ID" variant="outlined" color='secondary' className='TextField'/>
           <ConfirmButton>Confirmar</ConfirmButton>
         </div>
-        <img src={logo}/>
+        <img className="Register-img" src={logo}/>
       </div>
     </ThemeProvider>
   );

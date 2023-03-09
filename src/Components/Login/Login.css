@@ -1,15 +1,15 @@
-.Container {
+.Login-container {
   height: 100vh;
   width: 100vw;
   display: flex;
 }
 
-.Left-container{
+.Login-left-container {
   height: 100vh;
   width: 50vw;
 }
 
-.Right-container{
+.Login-right-container {
   height: 100vh;
   width: 50vw;
   background-color: white;
@@ -20,7 +20,7 @@
   gap: 7vh;
 }
 
-h1{
+.Login-h1{
   font-family: 'Bebas Neue', cursive;
   font-size: 11vmin;
   text-align: center;
@@ -28,7 +28,7 @@ h1{
   margin: 0 0 2vh 0;
 }
 
-img{
+.Login-img{
   width: 39.65vw;
   height: 72.5vh;
   margin-left: -3vw;
@@ -44,7 +44,7 @@ img{
 .TextField{
   width: 20.62vw;
   height: 7.28vh;
-  margin: 0 0 5vh 0;
+  margin: 0 0 3vh 0;
 }
 
 

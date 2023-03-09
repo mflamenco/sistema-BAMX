@@ -43,16 +43,16 @@ const ConfirmButton = styled(Button)({
 function WindowSelection() {
 
   return (
-    <div className="Root-Container">
-      <div className="Container">
-        <h1>¿Qué caja atenderas hoy?</h1>
-        <div className="Button-Container">
-          <div className="Top-Container">
+    <div className="Selection-root-container">
+      <div className="Selection-container">
+        <h1 className="Selection-h1">¿Qué caja atenderas hoy?</h1>
+        <div className="Selection-button-container">
+          <div className="Selection-top-container">
             <WindowButton>Caja A</WindowButton>
             <WindowButton>Caja B</WindowButton>
             <WindowButton>Caja C</WindowButton>
           </div>
-          <div className="Bottom-Container">
+          <div className="Selection-bottom-container">
             <WindowButton>Caja D</WindowButton>
             <WindowButton>Administración</WindowButton>
             <WindowButton>Caja E</WindowButton>
@@ -60,7 +60,7 @@ function WindowSelection() {
         </div>
         <ConfirmButton>Confirmar</ConfirmButton>
       </div>
-      <img src={logo}/>
+      <img className="Selection-img" src={logo}/>
     </div>
   );
 }

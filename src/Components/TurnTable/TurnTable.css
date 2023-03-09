@@ -1,5 +1,5 @@
 
-.Root-Container{
+.Turn-root-container{
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -7,7 +7,7 @@
   justify-content: flex-start;
 }
 
-.Info-Container{
+.Turn-info-container{
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -17,7 +17,7 @@
   gap: 0vw;
 }
 
-.Container {
+.Turn-container {
   margin: 0 0 0 2.55vw;
   background-color: white;
   width: 75.27vw;
@@ -29,13 +29,13 @@
   gap: 0vh;
 }
 
-.Title-Container{
+.Turn-title-container{
   display: flex;
   width: 100%;
   justify-content:space-evenly;
 }
 
-.Left-Container{
+.Turn-left-container{
   width: 40.22%;
   height: 93%;
   padding: 4.8vh 0 0 2vw;
@@ -45,7 +45,7 @@
   gap: 2vh;
 }
 
-.Right-Container{
+.Turn-right-container{
   width: 59.78%;
   height: 93%;
   padding: 4.8vh 2vw 0 0vw;
@@ -55,8 +55,8 @@
   gap: 2vh;
 }
 
-.Attention-Box-One,
-.Attention-Box-Two{
+.Attention-box-one,
+.Attention-box-two{
   width: 39vmin;
   height: 8vh;
   display: flex;
@@ -66,17 +66,17 @@
   padding: 0vh 1vw;
 }
 
-.Attention-Box-One{
+.Attention-box-one{
   border: 5px solid #D00C2B;
 }
 
-.Attention-Box-Two{
+.Attention-box-two{
   border: 5px solid #FDA9B6;
   background-color: #FDA9B6;
 }
 
-.Attention-Box-Three,
-.Attention-Box-Four{
+.Attention-box-three,
+.Attention-box-four{
   width: 56vmin;
   height: 8vh;
   display: flex;
@@ -88,34 +88,34 @@
   padding-right: 1vw;
 }
 
-.Attention-Box-Three{
+.Attention-box-three{
   border: 5px solid #F56A40;
 }
 
-.Attention-Box-Four{
+.Attention-box-four{
   border: 5px solid #F8C4B5;
   background-color: #F8C4B5;
 }
 
-.Date-Container{
+.Turn-date-container{
   width: 22.8vw;
 }
 
-h1,
-h3{
+.Turn-h1,
+.Turn-h3{
   font-family: 'DM Sans';
   font-style: normal;
   font-weight: 700;
   font-display: swap;
 }
 
-h1{
+.Turn-h1{
   font-size: 4.8vmin;
   color: white;
   text-align: center;
 }
 
-h2{
+.Turn-h2{
   font-family: 'Bebas Neue', cursive;
   color: #602E36 ;
   font-weight: 400;
@@ -123,12 +123,12 @@ h2{
   margin: 0;
 }
 
-h3{
+.Turn-h3{
   margin: 0;
   font-size: 3.12vmin;
 }
 
-img{
+.Turn-img{
   z-index: 2;
   width: 6.87vw;
   height: 16.89vh;
