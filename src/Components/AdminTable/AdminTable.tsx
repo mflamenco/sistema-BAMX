@@ -2,6 +2,7 @@ import { IconButton, List, ListItem, ListItemText } from '@mui/material';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import { useCallback, useState } from "react";
+import { Pivot, PivotItem, TextField } from '@fluentui/react';
 import { ReactComponent as LinkIcon } from '../../Assets/Icon_link.svg';
 import { ReactComponent as LogoutIcon } from '../../Assets/Icon_logout.svg';
 import { ReactComponent as TrashIcon } from '../../Assets/Icon_trash.svg';
@@ -72,6 +73,12 @@ const BarButton = styled(Button)({
 });
 
 function AdminTable() {
+  // const resultCountText =
+  //   items.length === originalItems.length ? '' : ` (${items.length} of ${originalItems.length} shown)`;
+
+  // const onFilterChanged = (_: any, text: string): void => {
+  //   setItems(originalItems.filter(item => item.name.toLowerCase().indexOf(text.toLowerCase()) >= 0));
+  // };
 
   const [hoverLogout, setHoverLogout] = useState('Logout');
   const [hoverLink, sethoverLink] = useState('Logout');
@@ -112,98 +119,115 @@ function AdminTable() {
         </div>
         <div className="Container-body">
           <text className='h1'> Colaboradores actuales</text>
-          <div className='Container-table'>
-            <div className='Table-left' >
-            <List 
-              sx={{
-                overflow: 'auto',
-                maxHeight: '37vh',
-              }}
-            >
-                <Item
-                  secondaryAction={
-                    <IconButton edge="end" aria-label="delete">
-                      <TrashIcon />
-                    </IconButton>
-                  }
-                >
-                  <ItemText
-                    primary="Single-line item"
-                  />
-                </Item>
-                <Item
-                  secondaryAction={
-                    <IconButton edge="end" aria-label="delete">
-                      <TrashIcon />
-                    </IconButton>
-                  }
-                >
-                  <ItemText
-                    primary="Single-line item"
-                  />
-                </Item>
-                <Item
-                  secondaryAction={
-                    <IconButton edge="end" aria-label="delete">
-                      <TrashIcon />
-                    </IconButton>
-                  }
-                >
-                  <ItemText
-                    primary="Single-line item"
-                  />
-                </Item>
-                <Item
-                  secondaryAction={
-                    <IconButton edge="end" aria-label="delete">
-                      <TrashIcon />
-                    </IconButton>
-                  }
-                >
-                  <ItemText
-                    primary="Single-line item"
-                  />
-                </Item>
-                <Item
-                  secondaryAction={
-                    <IconButton edge="end" aria-label="delete">
-                      <TrashIcon />
-                    </IconButton>
-                  }
-                >
-                  <ItemText
-                    primary="Single-line item"
-                  />
-                </Item>
-                <Item
-                  secondaryAction={
-                    <IconButton edge="end" aria-label="delete">
-                      <TrashIcon />
-                    </IconButton>
-                  }
-                >
-                  <ItemText
-                    primary="Single-line item"
-                  />
-                </Item>
-                <Item
-                  secondaryAction={
-                    <IconButton edge="end" aria-label="delete">
-                      <TrashIcon />
-                    </IconButton>
-                  }
-                >
-                  <ItemText
-                    primary="Single-line item"
-                  />
-                </Item>
-            </List>
-            </div>
-            <div className='TableRight'>
-            <CreateButton>
-                Crear colaborador
-              </CreateButton>
-            </div>
+          <div className='Container-bar'>
+            <TextField
+              placeholder={'Buscar'} //+ resultCountText}
+              //onChange={onFilterChanged}
+            />
+            <Pivot linkFormat="tabs">
+              <PivotItem headerText="Colaboradores">
+                <div className='Container-table'>
+                  <div className='Table-left' >
+                    <List 
+                      sx={{
+                        overflow: 'auto',
+                        maxHeight: '37vh',
+                      }}
+                    >
+                        <Item
+                          secondaryAction={
+                            <IconButton edge="end" aria-label="delete">
+                              <TrashIcon />
+                            </IconButton>
+                          }
+                        >
+                          <ItemText
+                            primary="Colaborador"
+                          />
+                        </Item>
+                        <Item
+                          secondaryAction={
+                            <IconButton edge="end" aria-label="delete">
+                              <TrashIcon />
+                            </IconButton>
+                          }
+                        >
+                          <ItemText
+                            primary="Colaborador"
+                          />
+                        </Item>
+                        <Item
+                          secondaryAction={
+                            <IconButton edge="end" aria-label="delete">
+                              <TrashIcon />
+                            </IconButton>
+                          }
+                        >
+                          <ItemText
+                            primary="Colaborador"
+                          />
+                        </Item>
+                    </List>
+                  </div>
+                <div className='TableRight'>
+                  <CreateButton>
+                      Crear colaborador
+                    </CreateButton>
+                  </div>
+                </div>
+              </PivotItem>
+              <PivotItem headerText="Comunidad">
+                <div className='Container-table'>
+                  <div className='Table-left' >
+                    <List 
+                      sx={{
+                        overflow: 'auto',
+                        maxHeight: '37vh',
+                      }}
+                    >
+                        <Item
+                          secondaryAction={
+                            <IconButton edge="end" aria-label="delete">
+                              <TrashIcon />
+                            </IconButton>
+                          }
+                        >
+                          <ItemText
+                            primary="Comunidad"
+                          />
+                        </Item>
+                        <Item
+                          secondaryAction={
+                            <IconButton edge="end" aria-label="delete">
+                              <TrashIcon />
+                            </IconButton>
+                          }
+                        >
+                          <ItemText
+                            primary="Comunidad"
+                          />
+                        </Item>
+                        <Item
+                          secondaryAction={
+                            <IconButton edge="end" aria-label="delete">
+                              <TrashIcon />
+                            </IconButton>
+                          }
+                        >
+                          <ItemText
+                            primary="Comunidad"
+                          />
+                        </Item>
+                    </List>
+                  </div>
+                <div className='TableRight'>
+                  <CreateButton>
+                      Crear comunidad
+                    </CreateButton>
+                  </div>
+                </div>
+              </PivotItem>
+            </Pivot>
           </div>
         </div>
       </div>

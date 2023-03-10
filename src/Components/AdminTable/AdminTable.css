@@ -60,6 +60,31 @@
   font-weight: 700 !important;
   font-size: 3.5vmin !important;
 }
+.link-115 {
+  background-color: #FFF1D3;
+  color: #e1ae7d;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+
+}
+.link-115:hover {
+  background-color: #f9e7c1;
+  color: #e1ae7d;
+}
+
+.linkIsSelected-107.is-selected {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  background-color: #FFAE62;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+}
+
+.linkIsSelected-107.is-selected:hover {
+  background-color: #f3963f;
+}
 
 .Logout {
   color:white;
