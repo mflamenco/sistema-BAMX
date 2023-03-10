@@ -9,17 +9,6 @@ import { ReactComponent as TrashIcon } from '../../Assets/Icon_trash.svg';
 import logo from '../../Assets/Logo_bamx.svg';
 import './AdminTable.css';
 
-const ItemText = styled(ListItemText)({
-  color: '#AC5300',
-  fontSize: '10vmin',
-  textAlign: 'left',
-  fontWeight: '700',
-  fontFamily: [
-    'DM Sans',
-    'sans-serif',
-  ],
-});
-
 const Item = styled(ListItem)({
   color: '#AC5300',
   width: '48vw',
@@ -28,6 +17,17 @@ const Item = styled(ListItem)({
   textAlign: 'center',
   fontWeight: '700',
   borderBottom: '4px solid #ECECEC;',
+  fontFamily: [
+    'DM Sans',
+    'sans-serif',
+  ],
+});
+
+const ItemText = styled(ListItemText)({
+  color: '#AC5300',
+  fontSize: '10vmin',
+  textAlign: 'left',
+  fontWeight: '700',
   fontFamily: [
     'DM Sans',
     'sans-serif',
@@ -114,7 +114,56 @@ function AdminTable() {
           <text className='h1'> Colaboradores actuales</text>
           <div className='Container-table'>
             <div className='Table-left' >
-            <List>
+            <List 
+              sx={{
+                overflow: 'auto',
+                maxHeight: '37vh',
+              }}
+            >
+                <Item
+                  secondaryAction={
+                    <IconButton edge="end" aria-label="delete">
+                      <TrashIcon />
+                    </IconButton>
+                  }
+                >
+                  <ItemText
+                    primary="Single-line item"
+                  />
+                </Item>
+                <Item
+                  secondaryAction={
+                    <IconButton edge="end" aria-label="delete">
+                      <TrashIcon />
+                    </IconButton>
+                  }
+                >
+                  <ItemText
+                    primary="Single-line item"
+                  />
+                </Item>
+                <Item
+                  secondaryAction={
+                    <IconButton edge="end" aria-label="delete">
+                      <TrashIcon />
+                    </IconButton>
+                  }
+                >
+                  <ItemText
+                    primary="Single-line item"
+                  />
+                </Item>
+                <Item
+                  secondaryAction={
+                    <IconButton edge="end" aria-label="delete">
+                      <TrashIcon />
+                    </IconButton>
+                  }
+                >
+                  <ItemText
+                    primary="Single-line item"
+                  />
+                </Item>
                 <Item
                   secondaryAction={
                     <IconButton edge="end" aria-label="delete">

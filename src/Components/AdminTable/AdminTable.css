@@ -37,7 +37,7 @@
   padding: 3vh 1vw;
   display: flex;
   flex-direction: row;
-  min-height: 38vh;
+  max-height: 38vh;
   justify-content: space-between;
   min-width: 79vw;
   background: #FFFFFF;
@@ -69,7 +69,6 @@
 }
 
 img{
-  z-index: 2;
   height: 16.89vh;
   margin: 74vh 0 -3vh -2vw;
 }
