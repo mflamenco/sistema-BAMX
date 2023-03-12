@@ -1,8 +1,11 @@
+import { Box, IconButton, Modal, TextField } from '@mui/material';
 import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
+import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import { useCallback, useState } from "react";
+import { ReactComponent as CloseIcon } from '../../Assets/Icon_close.svg';
 import { ReactComponent as LinkIcon } from '../../Assets/Icon_link.svg';
 import { ReactComponent as LogoutIcon } from '../../Assets/Icon_logout.svg';
+import { Text } from '@fluentui/react'
 import logo from '../../Assets/Logo_bamx.svg';
 import './TurnChange.css';
 
@@ -12,7 +15,7 @@ const TurnButton = styled(Button)({
   padding: '1vh 0',
   color: '#F7A600',
   borderRadius: '20px',
-  border: '6px solid #F7A600;',
+  border: '4px solid #F7A600;',
   width: '75%',
   fontWeight: '700',
   textTransform: 'capitalize',
@@ -25,6 +28,37 @@ const TurnButton = styled(Button)({
     backgroundColor: '#F7A600',
     color: 'white'
   },
+});
+
+const LinkButton = styled(Button)({
+  padding: '1vh 0',
+  color: '#F7A600',
+  borderRadius: '20px',
+  border: '4px solid #F7A600;',
+  width: '35%',
+  fontWeight: '700',
+  alignSelf: 'center',
+  textTransform: 'capitalize',
+  fontSize: '3vmin',
+  fontFamily: [
+    'DM Sans',
+    'sans-serif',
+  ].join(','),
+  '&:hover': {
+    backgroundColor: '#F7A600',
+    color: 'white'
+  },
+});
+
+const LinkTextField = styled(TextField)({
+  color: '#F7A600',
+  alignSelf: 'center',
+  width: '88%',
+  fontWeight: '700',
+  fontFamily: [
+    'DM Sans',
+    'sans-serif',
+  ],
 });
 
 const BarButton = styled(Button)({
@@ -44,8 +78,28 @@ const BarButton = styled(Button)({
   },
 });
 
+const style = {
+  gap: '5.5vh',
+  fontFamily: 'DM Sans',
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '40vw',
+  height: '32vh',
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+  display: 'flex',
+  alignItems: 'flex-start',
+  flexDirection: 'column',
+  borderRadius: '18px',
+};
 
 function TurnChange() {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const [hoverLogout, setHoverLogout] = useState('Logout');
   const [hoverLink, sethoverLink] = useState('Logout');
@@ -66,12 +120,25 @@ function TurnChange() {
     }
   }, []);
 
+  let theme = createTheme({
+    palette: {
+      primary: {
+        main: '#F7A600',
+      },
+      secondary: {
+        main: '#EF8018',
+      },
+    },
+  });
+
   return (
+    <ThemeProvider theme={theme}>
     <div className="Turn-change">
-      <img src={logo}/>
+      <img alt={'logo de banco de alimentos'} src={logo}/>
       <div className='Container'>
         <div className="Button-container">
           <BarButton 
+          onClick={handleOpen}
           onMouseEnter={() => hoverHandler(true,1)}
           onMouseLeave={() => hoverHandler(false,1)} 
           startIcon={<LinkIcon className={hoverLink} width={'2vw'} />} >
@@ -83,24 +150,42 @@ function TurnChange() {
           startIcon={<LogoutIcon className={hoverLogout} width={'2vw'} />} >
             Cerrar Sesión
           </BarButton>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <IconButton onClick={handleClose} aria-label="close">
+                <CloseIcon />
+              </IconButton>
+              <LinkTextField id="outlined-basic" color='secondary' label="Nuevo link de Google Sheets" variant="outlined" />
+              <LinkButton onClick={handleClose}>
+                Confirmar
+              </LinkButton>
+            </Box>
+          </Modal>
         </div>
         <div className="Container-body">
           <div className="Container-top">
-            <text className='h1'> Actualmente asistiendo a</text>
+            <Text className='h1'> Actualmente asistiendo a</Text>
             <div className="Turn">
               <div className="Turn-label">
-                <text> turno 1</text>
-                <text> comunidad A</text>
+                <Text className="Turn-label-text"> turno 1</Text>
+                <Text className="Turn-label-text"> comunidad A</Text>
               </div>
               <TurnButton>
                 Finalizar turno
               </TurnButton>
             </div>
           </div>
-          <text className='h2'> *  Recuerda presionar el botón una vez que termines de atender a la comunidad</text>
+          <Text className='h2'> *  Recuerda presionar el botón una vez que termines de atender a la comunidad</Text>
         </div>
       </div>
     </div>
+    </ThemeProvider>
+
   );
 }
 
