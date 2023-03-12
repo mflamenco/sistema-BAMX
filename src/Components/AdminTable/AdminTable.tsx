@@ -1,16 +1,19 @@
-import { getFocusStyle, getTheme, ITheme, List, mergeStyleSets, Pivot, PivotItem, TextField } from '@fluentui/react';
+import { getFocusStyle, getTheme, ITheme, List, mergeStyleSets, Pivot, PivotItem, SearchBox, Text } from '@fluentui/react';
+import { IIconProps } from '@fluentui/react/lib/Icon';
+import { initializeIcons } from '@fluentui/react/lib/Icons';
 import { IconButton, ListItem, ListItemText } from '@mui/material';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
-import { ReactNode, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { ReactComponent as LinkIcon } from '../../Assets/Icon_link.svg';
 import { ReactComponent as LogoutIcon } from '../../Assets/Icon_logout.svg';
-import SearchIcon from '../../Assets/Icon_search.svg';
 import { ReactComponent as TrashIcon } from '../../Assets/Icon_trash.svg';
 import logo from '../../Assets/Logo_bamx.svg';
 import './AdminTable.css';
 
-const iconProps = { iconName: 'Search Icon', ariaLabel: SearchIcon };
+initializeIcons();
+
+const iconProps:IIconProps = { iconName: 'Search' };
 const theme: ITheme = getTheme();
 
 type IItem = {
@@ -83,7 +86,7 @@ const BarButton = styled(Button)({
 
 const classNames = mergeStyleSets({
   itemCell: [
-    getFocusStyle(theme),
+    getFocusStyle(theme, { inset: -1 }),
     {
       padding: 10,
       boxSizing: 'border-box',
@@ -118,51 +121,33 @@ const classNames = mergeStyleSets({
   search: [
     {
       input: {
-        color: 'white',
+        fontFamily: 'DM Sans',   
+        fontWeight: '600',
+        color: '#AC5300',
         backgroundColor: '#FFD5AD',
         borderRadius: '14px',
+        fontSize: '2.5vmin',
+        marginLeft: '1vw',
       },
-      div: {
-        borderRadius: '14px',
-        border: '0px',
-        color: 'white',
-
+      i: {
+        color: '#AC5300',
       },
-    width: '40vw',
+      height: '5vh'
+,      color: '#AC5300',
+      backgroundColor: '#FFD5AD',
+      borderRadius: '14px',
+      border: '0',
+      width: '40vw',
     }
   ],
 });
 
 function AdminTable() {
-  // const resultCountText =
-  //   items.length === originalItems.length ? '' : ` (${items.length} of ${originalItems.length} shown)`;
-
-  // const onFilterChanged = (_: any, text: string): void => {
-  //   setItems(originalItems.filter(item => item.name.toLowerCase().indexOf(text.toLowerCase()) >= 0));
-  // };
 
   const [hoverLogout, setHoverLogout] = useState('Logout');
-  const [hoverLink, sethoverLink] = useState('Logout');
+  const [hoverLink, setHoverLink] = useState('Logout');
   const [pivot, setPivot] = useState(true);
-
-
-  const hoverHandler = useCallback((isHover: boolean, indexButton: number) => {
-    if (isHover) {
-      if (indexButton === 0) {
-        setHoverLogout('Logout-hover')
-      } else {
-        sethoverLink('Logout-hover')
-      }
-    } else {
-      if (indexButton === 0) {
-        setHoverLogout('Logout')
-      } else {
-        sethoverLink('Logout')
-      }
-    }
-  }, []);
-
-  const itemList: IItem[] = [
+  const originalItems: IItem[] = [
     {name: 'c1', id: 'i1'},
     {name: 'c2', id: 'i2'},
     {name: 'c1', id: 'i1'},
@@ -172,6 +157,30 @@ function AdminTable() {
     {name: 'c1', id: 'i1'},
     {name: 'c2', id: 'i2'}
   ];
+
+  const [items, setItems] = useState(originalItems);
+
+  const onFilterChanged = (_: any, text: string | undefined): void => {
+    if (text) {
+      setItems(originalItems.filter(item => item.name.toLowerCase().indexOf(text.toLowerCase()) >= 0));
+    };
+  };
+
+  const hoverHandler = useCallback((isHover: boolean, indexButton: number) => {
+    if (isHover) {
+      if (indexButton === 0) {
+        setHoverLogout('Logout-hover')
+      } else {
+        setHoverLink('Logout-hover')
+      }
+    } else {
+      if (indexButton === 0) {
+        setHoverLogout('Logout')
+      } else {
+        setHoverLink('Logout')
+      }
+    }
+  }, []);
 
   const onRenderCell = (item: IItem| undefined, index: number | undefined): JSX.Element => {
     return (
@@ -184,6 +193,10 @@ function AdminTable() {
         </div>
       </div>
     );
+  };
+  
+  const handleClear = {
+    
   };
 
   return (
@@ -205,25 +218,24 @@ function AdminTable() {
           </BarButton>
         </div>
         <div className="Container-body">
-          <text className='h1'> Colaboradores actuales</text>
+          <Text className='h1'> Colaboradores actuales</Text>
           <div className='Container-bar'>
-            <TextField
-              iconProps={iconProps}
-              className={classNames.search}
-              placeholder={ 'Buscar'} //+ resultCountText}
-              //onChange={onFilterChanged}
+          <SearchBox 
+            iconProps={iconProps} 
+            className={classNames.search}
+            onClear={ev => setItems(originalItems)}
+            onChange={(_, newValue) => onFilterChanged( _, newValue)}
             />
             <Pivot linkFormat="tabs">
-              <PivotItem headerText="Colaboradores">
+              <PivotItem headerText="Colaboradores" onChange={ev => console.log('tu mama cola')}>
               </PivotItem>
-              <PivotItem headerText="Comunidad">
-              {console.log('ayuda') as ReactNode}
+              <PivotItem headerText="Comunidad" onChange={ev => console.log('tu mama')}>
               </PivotItem>
             </Pivot>
           </div>
           <div className='Container-table'>
             <div className='Table-left' >
-            <List className='List' items={itemList} onRenderCell={onRenderCell} />
+            <List className='List' items={items} onRenderCell={onRenderCell} />
             </div>
           <div className='Table-right'>
             <CreateButton>
