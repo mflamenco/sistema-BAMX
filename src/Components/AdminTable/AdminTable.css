@@ -32,12 +32,20 @@
   align-items: center;
   justify-content: center;
 }
+.Container-bar {
+  display: flex;
+  width: 81vw;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
 
 .Container-table {
   padding: 3vh 1vw;
   display: flex;
   flex-direction: row;
-  max-height: 38vh;
+  height: 38vh;
   justify-content: space-between;
   min-width: 79vw;
   background: #FFFFFF;
@@ -60,7 +68,7 @@
   font-weight: 700 !important;
   font-size: 3.5vmin !important;
 }
-.link-115 {
+.ms-Pivot-link {
   background-color: #FFF1D3;
   color: #e1ae7d;
   font-family: 'DM Sans', sans-serif;
@@ -69,12 +77,12 @@
   border-top-right-radius: 12px;
 
 }
-.link-115:hover {
+.ms-Pivot-link:hover {
   background-color: #f9e7c1;
   color: #e1ae7d;
 }
 
-.linkIsSelected-107.is-selected {
+.ms-Pivot-link.is-selected {
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
   background-color: #FFAE62;
@@ -82,8 +90,13 @@
   font-weight: 500;
 }
 
-.linkIsSelected-107.is-selected:hover {
+.ms-Pivot-link.is-selected:hover {
   background-color: #f3963f;
+}
+
+.List {
+  height: 100%;
+  overflow: auto;
 }
 
 .Logout {

@@ -1,14 +1,23 @@
-import { IconButton, List, ListItem, ListItemText } from '@mui/material';
+import { getFocusStyle, getTheme, ITheme, List, mergeStyleSets, Pivot, PivotItem, TextField } from '@fluentui/react';
+import { IconButton, ListItem, ListItemText } from '@mui/material';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
-import { useCallback, useState } from "react";
-import { Pivot, PivotItem, TextField } from '@fluentui/react';
+import { ReactNode, useCallback, useState } from "react";
 import { ReactComponent as LinkIcon } from '../../Assets/Icon_link.svg';
 import { ReactComponent as LogoutIcon } from '../../Assets/Icon_logout.svg';
+import SearchIcon from '../../Assets/Icon_search.svg';
 import { ReactComponent as TrashIcon } from '../../Assets/Icon_trash.svg';
-
 import logo from '../../Assets/Logo_bamx.svg';
 import './AdminTable.css';
+
+const iconProps = { iconName: 'Search Icon', ariaLabel: SearchIcon };
+const theme: ITheme = getTheme();
+
+type IItem = {
+  name: string;
+  id: string;
+};
+
 
 const Item = styled(ListItem)({
   color: '#AC5300',
@@ -72,6 +81,58 @@ const BarButton = styled(Button)({
   },
 });
 
+const classNames = mergeStyleSets({
+  itemCell: [
+    getFocusStyle(theme),
+    {
+      padding: 10,
+      boxSizing: 'border-box',
+      color: '#AC5300',
+      width: '48vw',
+      height: '9vh',
+      fontSize: '3.5vmin',
+      textAlign: 'center',
+      fontWeight: '700',
+      borderBottom: '4px solid #ECECEC;',
+      fontFamily: [
+        'DM Sans',
+        'sans-serif',
+      ],
+    },
+  ],
+  itemContent: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginLeft: 10,
+    displayDirection: 'row',
+    overflow: 'hidden',
+    flexGrow: 1,
+  },
+  itemName: [
+    {
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+    },
+  ],
+  search: [
+    {
+      input: {
+        color: 'white',
+        backgroundColor: '#FFD5AD',
+        borderRadius: '14px',
+      },
+      div: {
+        borderRadius: '14px',
+        border: '0px',
+        color: 'white',
+
+      },
+    width: '40vw',
+    }
+  ],
+});
+
 function AdminTable() {
   // const resultCountText =
   //   items.length === originalItems.length ? '' : ` (${items.length} of ${originalItems.length} shown)`;
@@ -82,6 +143,8 @@ function AdminTable() {
 
   const [hoverLogout, setHoverLogout] = useState('Logout');
   const [hoverLink, sethoverLink] = useState('Logout');
+  const [pivot, setPivot] = useState(true);
+
 
   const hoverHandler = useCallback((isHover: boolean, indexButton: number) => {
     if (isHover) {
@@ -98,6 +161,30 @@ function AdminTable() {
       }
     }
   }, []);
+
+  const itemList: IItem[] = [
+    {name: 'c1', id: 'i1'},
+    {name: 'c2', id: 'i2'},
+    {name: 'c1', id: 'i1'},
+    {name: 'c2', id: 'i2'},
+    {name: 'c1', id: 'i1'},
+    {name: 'c2', id: 'i2'},
+    {name: 'c1', id: 'i1'},
+    {name: 'c2', id: 'i2'}
+  ];
+
+  const onRenderCell = (item: IItem| undefined, index: number | undefined): JSX.Element => {
+    return (
+      <div className={classNames.itemCell} data-is-focusable={true}>
+        <div className={classNames.itemContent}>
+          <div className={classNames.itemName}>{item?.name}</div>
+          <IconButton aria-label="delete">
+            <TrashIcon />
+          </IconButton>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="Turn-change">
@@ -121,113 +208,28 @@ function AdminTable() {
           <text className='h1'> Colaboradores actuales</text>
           <div className='Container-bar'>
             <TextField
-              placeholder={'Buscar'} //+ resultCountText}
+              iconProps={iconProps}
+              className={classNames.search}
+              placeholder={ 'Buscar'} //+ resultCountText}
               //onChange={onFilterChanged}
             />
             <Pivot linkFormat="tabs">
               <PivotItem headerText="Colaboradores">
-                <div className='Container-table'>
-                  <div className='Table-left' >
-                    <List 
-                      sx={{
-                        overflow: 'auto',
-                        maxHeight: '37vh',
-                      }}
-                    >
-                        <Item
-                          secondaryAction={
-                            <IconButton edge="end" aria-label="delete">
-                              <TrashIcon />
-                            </IconButton>
-                          }
-                        >
-                          <ItemText
-                            primary="Colaborador"
-                          />
-                        </Item>
-                        <Item
-                          secondaryAction={
-                            <IconButton edge="end" aria-label="delete">
-                              <TrashIcon />
-                            </IconButton>
-                          }
-                        >
-                          <ItemText
-                            primary="Colaborador"
-                          />
-                        </Item>
-                        <Item
-                          secondaryAction={
-                            <IconButton edge="end" aria-label="delete">
-                              <TrashIcon />
-                            </IconButton>
-                          }
-                        >
-                          <ItemText
-                            primary="Colaborador"
-                          />
-                        </Item>
-                    </List>
-                  </div>
-                <div className='TableRight'>
-                  <CreateButton>
-                      Crear colaborador
-                    </CreateButton>
-                  </div>
-                </div>
               </PivotItem>
               <PivotItem headerText="Comunidad">
-                <div className='Container-table'>
-                  <div className='Table-left' >
-                    <List 
-                      sx={{
-                        overflow: 'auto',
-                        maxHeight: '37vh',
-                      }}
-                    >
-                        <Item
-                          secondaryAction={
-                            <IconButton edge="end" aria-label="delete">
-                              <TrashIcon />
-                            </IconButton>
-                          }
-                        >
-                          <ItemText
-                            primary="Comunidad"
-                          />
-                        </Item>
-                        <Item
-                          secondaryAction={
-                            <IconButton edge="end" aria-label="delete">
-                              <TrashIcon />
-                            </IconButton>
-                          }
-                        >
-                          <ItemText
-                            primary="Comunidad"
-                          />
-                        </Item>
-                        <Item
-                          secondaryAction={
-                            <IconButton edge="end" aria-label="delete">
-                              <TrashIcon />
-                            </IconButton>
-                          }
-                        >
-                          <ItemText
-                            primary="Comunidad"
-                          />
-                        </Item>
-                    </List>
-                  </div>
-                <div className='TableRight'>
-                  <CreateButton>
-                      Crear comunidad
-                    </CreateButton>
-                  </div>
-                </div>
+              {console.log('ayuda') as ReactNode}
               </PivotItem>
             </Pivot>
+          </div>
+          <div className='Container-table'>
+            <div className='Table-left' >
+            <List className='List' items={itemList} onRenderCell={onRenderCell} />
+            </div>
+          <div className='Table-right'>
+            <CreateButton>
+              Crear {pivot.toString()}
+            </CreateButton>
+            </div>
           </div>
         </div>
       </div>
