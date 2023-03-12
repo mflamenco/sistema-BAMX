@@ -47,7 +47,7 @@ function Login() {
   const [errorMess, setErrorMess] = useState("")
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const api = 'http://localhost:8000/'
+  const api = 'https://bamx-cxehn.ondigitalocean.app/'
   const navigate = useNavigate();
   
 
@@ -66,7 +66,7 @@ function Login() {
         }
       })
       .catch(error => {
-        console.log("aiuda")
+        console.log(error)
       })
   }
 
@@ -84,16 +84,14 @@ function Login() {
       localStorage.setItem('user-token', result.data.token)
       
       getUserType()
-      //navigate("/seleccion-de-caja")
     })
     .catch(error => {
+      console.log(error)
       errorMess.style.display = "flex"
 
-      console.log(username)
-      console.log(password)
       setErrorMess("Tu usuario o tu contraseña es incorrecto")
       localStorage.removeItem('user-token')
-      console.log("nouu")
+      
     })
   }
 

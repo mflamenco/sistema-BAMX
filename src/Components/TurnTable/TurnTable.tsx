@@ -18,6 +18,8 @@ function TurnTable() {
     return <Navigate to="/"/>
   }
 
+  
+
   return (
     <div className="Turn-root-container">
       <img className="Turn-img" src={logo}/>
