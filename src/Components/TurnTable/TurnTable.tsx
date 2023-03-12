@@ -1,6 +1,7 @@
 import './TurnTable.css';
 import React, {useState, useEffect} from 'react';
 import logo from '../../Assets/Logo_bamx.svg';
+import { Navigate } from 'react-router-dom';
 
 const currentDate = new Date()
 var days = ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
@@ -10,7 +11,12 @@ function TurnTable() {
   const [dateState, setDateState] = useState(new Date())
   useEffect(() => {
     setInterval(() => setDateState(new Date()), 30000);
-}, []);
+  }, []);
+  const [token, setToken] = useState(localStorage.getItem('user-token') || null)
+
+  if(!token){
+    return <Navigate to="/"/>
+  }
 
   return (
     <div className="Turn-root-container">

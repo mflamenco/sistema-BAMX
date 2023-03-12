@@ -1,10 +1,11 @@
-import React from 'react';
-import logo from '../../Assets/Logo_bamx.svg';
 import './RegisterCommunity.css';
+import React, {useState} from 'react';
+import logo from '../../Assets/Logo_bamx.svg';
 import { styled, ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import { Navigate } from 'react-router-dom';
 
 const ConfirmButton = styled(Button)({
   fontSize: '5vmin',
@@ -36,6 +37,12 @@ let theme = createTheme({
 });
 
 function RegisterCommunity() {
+
+  const [token, setToken] = useState(localStorage.getItem('user-token') || null)
+
+  if(!token){
+    return <Navigate to="/"/>
+  }
 
   return (
     <ThemeProvider theme={theme}>

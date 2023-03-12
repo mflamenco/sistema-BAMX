@@ -1,18 +1,19 @@
+import './Login.css';
 import TextField from '@mui/material/TextField';
 import logo from '../../Assets/Logo_tilted.svg';
 import Button from '@mui/material/Button';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-import './Login.css';
 import { styled, ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles';
+import { useNavigate } from "react-router-dom";
 
 const LoginButton = styled(Button)({
   fontSize: '4.44vmin',
   padding: '6px 12px',
   width: '12.64vw',
   height: '6.17vh',
-  margin: '7vh 0 0 0',
+  margin: '5vh 0 0 0',
   paddingTop: '3vh',
   paddingBottom: '3vh',
   color: '#EA2040',
@@ -39,26 +40,59 @@ let theme = createTheme({
   },
 });
 
+
 function Login() {
 
-  const [user, setUser] = useState(null)
+  const [token, setToken] = useState(localStorage.getItem('user-token') || null)
+  const [errorMess, setErrorMess] = useState("")
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const api = 'http://localhost:8000/auth'
-  const token = localStorage.getItem('user-token') || null
+  const api = 'http://localhost:8000/'
+  const navigate = useNavigate();
+  
+
+  const getUserType = async ()=>{
+    await axios
+      .get(api + "users/my", 
+      {
+        headers: {Authorization : `token ${token}`}
+      })
+      .then( result => {
+        console.log(result.data.is_superuser)
+        if(result.data.is_superuser){
+          //
+        } else{
+          navigate("/seleccion-de-caja")
+        }
+      })
+      .catch(error => {
+        console.log("aiuda")
+      })
+  }
 
   const loginFunc = () => {
+    const errorMess = document.getElementById('login-error') as HTMLInputElement;
     axios
-    .post(api, {
+    .post(api + "api-token-auth/", {
       username: username,
       password: password
     })
     .then(result => {
-      console.log("siuu")
+      errorMess.style.display = "none"
+      setToken(result.data.token)
+      console.log(token)
+      localStorage.setItem('user-token', result.data.token)
+      
+      getUserType()
+      //navigate("/seleccion-de-caja")
     })
     .catch(error => {
+      errorMess.style.display = "flex"
+
       console.log(username)
-      console.log(username)
+      console.log(password)
+      setErrorMess("Tu usuario o tu contraseña es incorrecto")
+      localStorage.removeItem('user-token')
       console.log("nouu")
     })
   }
@@ -73,6 +107,7 @@ function Login() {
           <h1 className="Login-h1"> Ingresa con <br/> tu ID </h1>
           <TextField value={username} onChange={(newValue) => setUsername(newValue.target.value)} id="username-input" label="ID" variant="outlined" color='secondary' className='TextField'/>
           <TextField value={password} onChange={(newValue) => setPassword(newValue.target.value)} id="password-input" label="Contraseña" variant="outlined" color='secondary' type='password' className='TextField'/>
+          <h3 className="error-message" id="login-error"> {errorMess} </h3>
           <LoginButton onClick={loginFunc}>Entrar</LoginButton>
         </div>
       </div>
