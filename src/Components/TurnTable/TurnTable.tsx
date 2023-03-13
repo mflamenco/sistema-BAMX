@@ -11,14 +11,17 @@ function TurnTable() {
   const [dateState, setDateState] = useState(new Date())
   useEffect(() => {
     setInterval(() => setDateState(new Date()), 30000);
+    setInterval(() => updateTurnos(), 30000);
   }, []);
-  const [token, setToken] = useState(localStorage.getItem('user-token') || null)
+  const [token] = useState(localStorage.getItem('user-token') || null)
+
+  function updateTurnos(){
+    //make call to db to get turns and update them in case they are already being attended
+  }
 
   if(!token){
     return <Navigate to="/"/>
   }
-
-  
 
   return (
     <div className="Turn-root-container">

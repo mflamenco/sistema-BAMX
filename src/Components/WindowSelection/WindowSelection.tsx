@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './WindowSelection.css';
 import logo from '../../Assets/Logo_bamx.svg';
 import { styled } from '@mui/material/styles';
@@ -68,6 +68,15 @@ function WindowSelection() {
 
   const api = 'https://bamx-cxehn.ondigitalocean.app/'
   const navigate = useNavigate();
+
+  useEffect(
+    createTurnVariable, // <- function that will run on every dependency update
+    [] // <-- empty dependency array
+  )
+  
+  function createTurnVariable(){
+    localStorage.setItem('turn', "0")
+  }
 
   if(!token){
     return <Navigate to="/"/>
@@ -238,7 +247,7 @@ function WindowSelection() {
       if(cajaSeleccionada === "6"){
         navigate("/registrar-comunidad")
       } else{
-        //
+        navigate("/cambio-de-turno")
       }
     })
     .catch( error => {

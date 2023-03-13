@@ -1,10 +1,10 @@
 import './App.css';
-import TurnChange from './Components/TurnChange/TurnChange';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Login from './Components/Login/Login';
 import RegisterCommunity from './Components/RegisterCommunity/RegisterCommunity';
 import TurnTable from './Components/TurnTable/TurnTable';
 import WindowSelection from './Components/WindowSelection/WindowSelection';
+import TurnChange from './Components/TurnChange/TurnChange';
 
 function App() {
 
@@ -16,6 +16,7 @@ function App() {
           <Route path='/tabla-de-turnos' element={<TurnTable/>}/>
           <Route path='/registrar-comunidad' element={<RegisterCommunity/>}/>
           <Route path='/seleccion-de-caja' element={<WindowSelection/>}/>
+          <Route path='/cambio-de-turno' element={<TurnChange/>}/>
         </Routes>
       </BrowserRouter>
     </div>

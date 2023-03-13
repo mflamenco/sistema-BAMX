@@ -5,9 +5,12 @@ import { useCallback, useState } from "react";
 import { ReactComponent as CloseIcon } from '../../Assets/Icon_close.svg';
 import { ReactComponent as LinkIcon } from '../../Assets/Icon_link.svg';
 import { ReactComponent as LogoutIcon } from '../../Assets/Icon_logout.svg';
+import { Navigate } from 'react-router-dom';
 import { Text } from '@fluentui/react'
 import logo from '../../Assets/Logo_bamx.svg';
 import './TurnChange.css';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -104,6 +107,59 @@ function TurnChange() {
   const [hoverLogout, setHoverLogout] = useState('Logout');
   const [hoverLink, sethoverLink] = useState('Logout');
 
+  const [token] = useState(localStorage.getItem('user-token') || null)
+
+  const api = 'https://bamx-cxehn.ondigitalocean.app/'
+  const navigate = useNavigate();
+
+  function getCajaNumber(caja: String){
+    if(caja === "Caja A"){
+      return "1"
+    } else if (caja === "Caja B"){
+      return "2"
+    } else if (caja === "Caja C"){
+      return "3"
+    } else if (caja === "Caja D"){
+      return "4"
+    } else if (caja === "Caja E"){
+      return "5"
+    }
+    return "6"
+  }
+
+  function logout() {
+    axios
+      .get(api + "users/my", 
+      {
+        headers: {Authorization : `token ${token}`}
+      })
+      .then( result => {
+        updateCajaWithUser(result.data.caja)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
+  async function updateCajaWithUser(cajaSeleccionada: String){
+    await axios
+    .patch(api + "cajas/" + getCajaNumber(cajaSeleccionada) + "/",
+    {
+      user: null
+    },
+    {
+      headers: {Authorization : `token ${token}`}
+    })
+    .then( result => {
+      localStorage.setItem('user-token', "")
+      navigate("/")
+    })
+    .catch( error => {
+      console.log(error)
+    })
+
+  }
+
   const hoverHandler = useCallback((isHover: boolean, indexButton: number) => {
     if (isHover) {
       if (indexButton === 0) {
@@ -131,10 +187,14 @@ function TurnChange() {
     },
   });
 
+  if(!token){
+    return <Navigate to="/"/>
+  }
+
   return (
     <ThemeProvider theme={theme}>
     <div className="Turn-change">
-      <img alt={'logo de banco de alimentos'} src={logo}/>
+      <img className="Turn-change-img" alt={'logo de banco de alimentos'} src={logo}/>
       <div className='Container'>
         <div className="Button-container">
           <BarButton 
@@ -147,6 +207,7 @@ function TurnChange() {
           <BarButton 
           onMouseEnter={() => hoverHandler(true,0)}
           onMouseLeave={() => hoverHandler(false,0)} 
+          onClick={() => logout()}
           startIcon={<LogoutIcon className={hoverLogout} width={'2vw'} />} >
             Cerrar Sesión
           </BarButton>
