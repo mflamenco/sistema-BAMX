@@ -1,4 +1,5 @@
 import './App.css';
+import AdminTable from './Components/AdminTable/AdminTable';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Login from './Components/Login/Login';
 import RegisterCommunity from './Components/RegisterCommunity/RegisterCommunity';

@@ -1,0 +1,119 @@
+.Turn-change {
+  padding: 5.5vh 2.5vw 7vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.Container {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: absolute;
+}
+
+.Button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2vw;
+  justify-content: flex-end;
+  padding-bottom: 1vh;
+}
+
+.Container-body {
+  background-color: white;
+  border-radius: 20px;
+  min-height: 78vh;
+  min-width: 95vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.Container-bar {
+  display: flex;
+  width: 81vw;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.Container-table {
+  padding: 3vh 1vw;
+  display: flex;
+  flex-direction: row;
+  height: 38vh;
+  justify-content: space-between;
+  min-width: 79vw;
+  background: #FFFFFF;
+  border: 3px solid rgba(226, 226, 226, 0.5);
+  box-shadow: 0px 4px 4px 1px rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+}
+
+.h1 {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 4.5vmin;
+  text-align: center;
+  color: #AC5300;
+  margin-bottom: 4vh;
+}
+
+.css-10hburv-MuiTypography-root{
+  font-family: 'DM Sans', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 3.5vmin !important;
+}
+.ms-Pivot-link {
+  background-color: #FFF1D3;
+  color: #e1ae7d;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  height: 8vh;
+  width: 15vw;
+  font-size: 3.5vmin;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+
+}
+.ms-Pivot-link:hover {
+  background-color: #f9e7c1;
+  color: #e1ae7d;
+}
+
+.Table-right {
+  padding: 7vh 3.5vw 0 0;
+}
+
+.ms-Pivot-link.is-selected {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  background-color: #FFAE62;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+}
+
+.ms-Pivot-link.is-selected:hover {
+  background-color: #f3963f;
+}
+
+.List {
+  height: 100%;
+  overflow: auto;
+}
+
+.Logout {
+  color:white;
+}
+.Logout-hover {
+  color:#E96D10;
+}
+
+img{
+  height: 16.89vh;
+  margin: 74vh 0 -3vh -2vw;
+}
