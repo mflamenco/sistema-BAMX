@@ -1,0 +1,59 @@
+.Register-root-container{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+}
+
+.Button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 90vw;
+  gap: 2vw;
+  justify-content: flex-end;
+  padding-bottom: 1vh;
+}
+
+.Register-container {
+  background-color: white;
+  width: 90.69vw;
+  height: 78vh;
+  border-radius: 27px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7vh;
+}
+
+.Register-h1{
+  font-family: 'Bebas Neue', cursive;
+  font-weight: 400;
+  font-size: 13.9vmin;
+  text-align: center;
+  word-wrap: break-word;
+  margin: 0;
+}
+
+.Register-img{
+  z-index: 2;
+  height: 16.89vh;
+  margin: -13vh 88vw 0 0;
+}
+
+.MuiInputLabel-root,
+.MuiOutlinedInput-root {
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 2.96vmin !important;
+  border-color: black !important;
+}
+
+.TextField{
+  width: 20.62vw;
+  height: 7.28vh;
+  margin: 0 0 5vh 0;
+}
