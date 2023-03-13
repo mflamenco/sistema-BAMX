@@ -85,6 +85,10 @@
   color: #e1ae7d;
 }
 
+.Table-right {
+  padding: 7vh 3.5vw 0 0;
+}
+
 .ms-Pivot-link.is-selected {
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
