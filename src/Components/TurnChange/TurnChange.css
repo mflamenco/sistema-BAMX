@@ -1,0 +1,114 @@
+
+.Turn-change {
+  padding: 5.5vh 2.5vw 7vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.Container {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: absolute;
+}
+.Container-body {
+  background-color: white;
+  border-radius: 20px;
+  min-height: 78vh;
+  min-width: 95vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.Container-body {
+  background-color: white;
+  border-radius: 20px;
+  min-height: 78vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.Button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2vw;
+  justify-content: flex-end;
+  padding-bottom: 1vh;
+}
+
+.Container-top {
+  gap: 3vw;
+  padding: 6vh 3vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.h1 {
+  max-width: 40vw;
+  word-wrap: break-word;
+  font-size: 15vmin;
+  font-family: 'Bebas Neue', cursive;
+  color: #602E36;
+}
+.h2 {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 5vmin;
+  width: 52vw;
+  text-align: center;
+  color: #BB681A;
+}
+
+.Turn {
+  display: flex;
+  flex-direction: column;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 5vmin;
+  text-align: center;
+  align-items: center;
+  gap: 5vh;
+}
+
+.Turn-label {
+  display: flex;
+  width: 35vw;
+  flex-direction: column;
+  border: 5px solid #D9D9D9;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 5vmin;
+  text-align: center;
+  color: #000000;
+  padding: 4vh 0;
+  gap: 4vh;
+}
+.Turn-label-text {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 5vmin;
+  text-align: center;
+  color: #000000;
+}
+
+.Logout {
+  color:white;
+}
+.Logout-hover {
+  color:#E96D10;
+}
+
+img{
+  z-index: 2;
+  height: 16.89vh;
+  margin: 74vh 0 -3vh -2vw;
+}
+
+

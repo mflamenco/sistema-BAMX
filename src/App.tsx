@@ -1,4 +1,5 @@
 import './App.css';
+import TurnChange from './Components/TurnChange/TurnChange';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Login from './Components/Login/Login';
 import RegisterCommunity from './Components/RegisterCommunity/RegisterCommunity';
