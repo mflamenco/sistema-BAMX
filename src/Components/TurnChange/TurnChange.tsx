@@ -151,7 +151,7 @@ function TurnChange() {
       headers: {Authorization : `token ${token}`}
     })
     .then( result => {
-      localStorage.setItem('user-token', "")
+      localStorage.removeItem('user-token')
       navigate("/")
     })
     .catch( error => {
