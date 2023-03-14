@@ -59,11 +59,19 @@ function Login() {
       })
       .then( result => {
         console.log(result.data.is_superuser)
-        if(result.data.is_superuser){
-          //
-        } else{
-          navigate("/seleccion-de-caja")
-        }
+        result.data.is_superuser ? (
+          navigate("/tabla-de-admin")
+         ) : (
+          result.data.caja ? (
+            result.data.caja === "Administracion" ? (
+              navigate("/registrar-comunidad")
+            ) : (
+              navigate("/cambio-de-turno")
+            )
+          ) : (
+            navigate("/seleccion-de-caja")
+          )
+         )
       })
       .catch(error => {
         console.log(error)
