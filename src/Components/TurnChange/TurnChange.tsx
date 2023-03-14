@@ -235,7 +235,7 @@ function TurnChange() {
             <div className="Turn">
               <Text className='h1'> Atendiendo en</Text>
               <div className="Turn-label">
-                  <Text className="Turn-label-box">Caja A</Text>
+                  <Text className="Turn-label-box">{localStorage.getItem('window')}</Text>
               </div>
               <Text className='h2'> *  Recuerda presionar el botón una vez que termines de atender a la comunidad</Text>
             </div>
