@@ -310,7 +310,7 @@ function AdminTable() {
             </Modal>
           </div>
           <div className="Container-body">
-            <Text className='h1'> Colaboradores actuales</Text>
+            <Text className='h1-admin'> Colaboradores actuales</Text>
             <div className='Container-bar'>
             <SearchBox 
               iconProps={iconProps} 
