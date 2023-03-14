@@ -96,6 +96,7 @@ function Login() {
     .catch(error => {
       console.log(error)
       errorMess.style.display = "flex"
+      errorMess.style.margin = "-4vh 0 -1vh"
 
       setErrorMess("Tu usuario o tu contraseña es incorrecto")
       localStorage.removeItem('user-token')

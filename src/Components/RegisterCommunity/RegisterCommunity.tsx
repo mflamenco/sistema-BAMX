@@ -109,7 +109,6 @@ let theme = createTheme({
 });
 
 function RegisterCommunity() {
-
   const [token] = useState(localStorage.getItem('user-token') || null)
   const [id, setId] = useState('')
   const [link, setLink] = useState("")
@@ -117,6 +116,9 @@ function RegisterCommunity() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [errorMess, setErrorMess] = useState("")
+
+
 
   const api = 'https://bamx-cxehn.ondigitalocean.app/'
   const navigate = useNavigate();
@@ -192,14 +194,21 @@ function RegisterCommunity() {
   }
 
   function confirmarIngresoDeComunidad() {
+    const errorMess = document.getElementById('id-error') as HTMLInputElement;
     axios
     .get(api + "comunidades/get_comunidad_por_clave_sae/?clave_sae=" + id, {
       headers: {Authorization : `token ${token}`}
     })
     .then( result => {
+      errorMess.style.display = "none"
       postTurn(result.data.id)
     })
     .catch( error => {
+      errorMess.style.display = "flex"
+      errorMess.style.margin = "-7vh 0 -1vh"
+
+
+      setErrorMess("La clave de comunidad es incorrecta")
       console.log(error)
     })
     
@@ -220,7 +229,6 @@ function RegisterCommunity() {
     .then( result => {
       localStorage.setItem("turn", String(turno))
       // Clean input
-      // Alert here
       console.log(result)
     })
     .catch( error => {
@@ -286,6 +294,7 @@ function RegisterCommunity() {
         <div className="Register-container">
           <h1 className="Register-h1">Ingresa el ID de la <br/> comunidad</h1> 
           <TextField id="outlined-basic" label="ID" onChange={(newValue) => setId(newValue.target.value)} variant="outlined" color='secondary' className='TextField'/>
+          <h3 className="error-message" id="id-error"> {errorMess} </h3>
           <ConfirmButton onClick={() => confirmarIngresoDeComunidad()}>Confirmar</ConfirmButton>
         </div>
         <img alt='logo de banco de alimentos' className="Register-img" src={logo}/>
