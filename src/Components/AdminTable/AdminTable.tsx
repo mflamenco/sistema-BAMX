@@ -276,7 +276,7 @@ function AdminTable() {
   return (
     <ThemeProvider theme={theme}>
       <div className="Turn-change">
-        <img alt='logo de banco de alimentos' src={logo}/>
+        <img alt='logo de banco de alimentos' className='Admin-img' src={logo}/>
         <div className='Container'>
           <div className="Button-container">
             <BarButton 
