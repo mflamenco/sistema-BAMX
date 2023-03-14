@@ -78,9 +78,18 @@ function WindowSelection() {
     localStorage.setItem('turn', "0")
   }
 
-  if(!token){
+  if(token){
+    if (localStorage.getItem('window')) {
+      if(localStorage.getItem('window') === "Administración") {
+        return <Navigate to="/registrar-comunidad"/>
+      } else {
+        return <Navigate to="/cambio-de-turno"/>
+      }
+    } 
+  } else {
     return <Navigate to="/"/>
   }
+  
   function setButtonSelected(button: HTMLInputElement, unselected: boolean){
     if(unselected){
       setDisableA(false)

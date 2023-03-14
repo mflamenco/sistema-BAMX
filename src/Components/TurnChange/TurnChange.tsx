@@ -152,6 +152,8 @@ function TurnChange() {
     })
     .then( result => {
       localStorage.removeItem('user-token')
+      localStorage.removeItem('window')
+
       navigate("/")
     })
     .catch( error => {
