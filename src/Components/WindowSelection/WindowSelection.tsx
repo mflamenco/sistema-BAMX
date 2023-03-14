@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { Link } from '@mui/material';
 
 const WindowButton = styled(Button)({
   fontSize: "6.17vmin",
@@ -28,9 +29,9 @@ const WindowButton = styled(Button)({
 const ConfirmButton = styled(Button)({
   fontSize: '5vmin',
   padding: '0vh 4vw',
-  color: '#EA2040',
+  color: '#029D3A',
   borderRadius: '7px',
-  border: '4px solid #EA2040;',
+  border: '4px solid #029D3A;',
   textTransform: "capitalize",
   fontWeight: 400,
   fontFamily: [
@@ -38,7 +39,7 @@ const ConfirmButton = styled(Button)({
     'cursive',
   ].join(','),
   '&:hover': {
-    backgroundColor: '#EA2040',
+    backgroundColor: '#029D3A',
     color: 'white'
   },
 });
@@ -88,6 +89,10 @@ function WindowSelection() {
     } 
   } else {
     return <Navigate to="/"/>
+  }
+
+  function sendTurntable() {
+    return <Navigate to="/tabla-de-turnos"/>
   }
   
   function setButtonSelected(button: HTMLInputElement, unselected: boolean){
@@ -294,8 +299,15 @@ function WindowSelection() {
           </div>
         </div>
         <ConfirmButton onClick={() => confirmSelection()} disabled={disableConfirm}>Confirmar</ConfirmButton>
+        <Link sx={{
+          marginTop: '-7vh',
+          fontSize: '3vmin',
+        }} 
+        className='Link-table' component="button" variant="body2" onClick={() => <Navigate to="/tabla-de-turnos"/>} color='#EA2040'>
+          Ir a la tabla de turnos
+        </Link>
       </div>
-      <img className="Selection-img" src={logo}/>
+      <img className="Selection-img" alt='logo banco de alimentos' src={logo}/>
     </div>
   );
 }
