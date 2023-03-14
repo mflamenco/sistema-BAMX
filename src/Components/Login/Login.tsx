@@ -51,11 +51,11 @@ function Login() {
   const navigate = useNavigate();
   
 
-  const getUserType = async ()=>{
+  const getUserType = async (newtoken: string)=>{
     await axios
       .get(api + "users/my", 
       {
-        headers: {Authorization : `token ${token}`}
+        headers: {Authorization : `token ${newtoken}`}
       })
       .then( result => {
         console.log(result.data.is_superuser)
@@ -83,7 +83,7 @@ function Login() {
       console.log(token)
       localStorage.setItem('user-token', result.data.token)
       
-      getUserType()
+      getUserType(result.data.token)
     })
     .catch(error => {
       console.log(error)
