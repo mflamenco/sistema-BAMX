@@ -47,12 +47,12 @@ function WindowSelection() {
   const [token] = useState(localStorage.getItem('user-token') || null)
   
   // Variables to know when a button is selected
-  const [cajaA, setCajaA] = useState(false)
-  const [cajaB, setCajaB] = useState(false)
-  const [cajaC, setCajaC] = useState(false)
-  const [cajaD, setCajaD] = useState(false)
-  const [cajaE, setCajaE] = useState(false)
-  const [cajaAdmin, setCajaAdmin] = useState(false)
+  const [windowA, setWindowA] = useState(false)
+  const [windowB, setWindowB] = useState(false)
+  const [windowC, setWindowC] = useState(false)
+  const [windowD, setWindowD] = useState(false)
+  const [windowE, setWindowE] = useState(false)
+  const [windowAdmin, setWindowAdmin] = useState(false)
 
   // Variables to disable buttons when one is selected
   const [disableA, setDisableA] = useState(false)
@@ -63,7 +63,7 @@ function WindowSelection() {
   const [disableAdmin, setDisableAdmin] = useState(false)
 
   // Variables to save informatiom about the selected window
-  const [cajaSeleccionada, setCajaSelect] = useState("")
+  const [windowSelect, setWindowSelect] = useState("")
   const [disableConfirm, setDisableConfirm] = useState(true) 
 
   const api = 'https://bamx-cxehn.ondigitalocean.app/'
@@ -89,7 +89,7 @@ function WindowSelection() {
       setDisableD(false)
       setDisableE(false)
       setDisableAdmin(false)
-      setCajaSelect("")
+      setWindowSelect("")
       button.style.background = "transparent"
       button.style.color = "black"
 
@@ -124,15 +124,15 @@ function WindowSelection() {
     }
   }
 
-  function selectWindow(caja: String) {
-    const button = document.getElementById(`${caja}`) as HTMLInputElement;
+  function selectWindow(window: String) {
+    const button = document.getElementById(`${window}`) as HTMLInputElement;
     const buttons = document.getElementsByClassName("Button") as HTMLCollection
 
-    if(caja === "A"){
-      setCajaA(!cajaA)
-      setButtonSelected(button, cajaA)
-      setCajaSelect("1")
-      if(!cajaA){
+    if(window === "A"){
+      setWindowA(!windowA)
+      setButtonSelected(button, windowA)
+      setWindowSelect("1")
+      if(!windowA){
         setDisableB(true)
         setDisableC(true)
         setDisableD(true)
@@ -140,14 +140,14 @@ function WindowSelection() {
         setDisableAdmin(true)
       }
 
-      disableOrEnableButtons(buttons, caja, !cajaA)
+      disableOrEnableButtons(buttons, window, !windowA)
 
-    } else if (caja === "B"){
-      console.log(cajaB)
-      setButtonSelected(button, cajaB)
-      setCajaB(!cajaB)
-      setCajaSelect("2")
-      if(!cajaB){
+    } else if (window === "B"){
+      console.log(windowB)
+      setButtonSelected(button, windowB)
+      setWindowB(!windowB)
+      setWindowSelect("2")
+      if(!windowB){
         setDisableA(true)
         setDisableC(true)
         setDisableD(true)
@@ -155,14 +155,14 @@ function WindowSelection() {
         setDisableAdmin(true)
       }
 
-      disableOrEnableButtons(buttons, caja, !cajaB)
+      disableOrEnableButtons(buttons, window, !windowB)
 
-    } else if (caja === "C"){
-      console.log(cajaC)
-      setButtonSelected(button, cajaC)
-      setCajaC(!cajaC)
-      setCajaSelect("3")
-      if(!cajaC){
+    } else if (window === "C"){
+      console.log(windowC)
+      setButtonSelected(button, windowC)
+      setWindowC(!windowC)
+      setWindowSelect("3")
+      if(!windowC){
         setDisableA(true)
         setDisableB(true)
         setDisableD(true)
@@ -170,13 +170,13 @@ function WindowSelection() {
         setDisableAdmin(true)
       }
 
-      disableOrEnableButtons(buttons, caja, !cajaC)
+      disableOrEnableButtons(buttons, window, !windowC)
 
-    } else if (caja === "D"){
-      setButtonSelected(button, cajaD)
-      setCajaD(!cajaD)
-      setCajaSelect("4")
-      if(!cajaD){
+    } else if (window === "D"){
+      setButtonSelected(button, windowD)
+      setWindowD(!windowD)
+      setWindowSelect("4")
+      if(!windowD){
         setDisableA(true)
         setDisableB(true)
         setDisableC(true)
@@ -184,13 +184,13 @@ function WindowSelection() {
         setDisableAdmin(true)
       }
 
-      disableOrEnableButtons(buttons, caja, !cajaD)
+      disableOrEnableButtons(buttons, window, !windowD)
 
-    } else if (caja === "E"){
-      setButtonSelected(button, cajaE)
-      setCajaE(!cajaE)
-      setCajaSelect("5")
-      if(!cajaE){
+    } else if (window === "E"){
+      setButtonSelected(button, windowE)
+      setWindowE(!windowE)
+      setWindowSelect("5")
+      if(!windowE){
         setDisableA(true)
         setDisableB(true)
         setDisableC(true)
@@ -198,13 +198,13 @@ function WindowSelection() {
         setDisableAdmin(true)
       }
 
-      disableOrEnableButtons(buttons, caja, !cajaE)
+      disableOrEnableButtons(buttons, window, !windowE)
 
     } else {
-      setButtonSelected(button, cajaAdmin)
-      setCajaAdmin(!cajaAdmin)
-      setCajaSelect("6")
-      if(!cajaAdmin){
+      setButtonSelected(button, windowAdmin)
+      setWindowAdmin(!windowAdmin)
+      setWindowSelect("6")
+      if(!windowAdmin){
         setDisableA(true)
         setDisableB(true)
         setDisableC(true)
@@ -212,7 +212,7 @@ function WindowSelection() {
         setDisableE(true)
       }
 
-      disableOrEnableButtons(buttons, caja, !cajaAdmin)
+      disableOrEnableButtons(buttons, window, !windowAdmin)
 
     }
 
@@ -225,17 +225,17 @@ function WindowSelection() {
         headers: {Authorization : `token ${token}`}
       })
       .then( result => {
-        updateCajaWithUser(result.data.id)
+        updateWindowWithUser(result.data.id)
       })
       .catch(error => {
         console.log(error)
       })
   }
 
-  async function updateCajaWithUser(id: String){
-    console.log(cajaSeleccionada)
+  async function updateWindowWithUser(id: String){
+    console.log(windowSelect)
     await axios
-    .patch(api + "cajas/" + cajaSeleccionada + "/",
+    .patch(api + "cajas/" + windowSelect + "/",
     {
       user: id
     },
@@ -244,9 +244,21 @@ function WindowSelection() {
     })
     .then( result => {
       console.log(result)
-      if(cajaSeleccionada === "6"){
+      if(windowSelect === "6"){
+        localStorage.setItem('window', "Administración")
         navigate("/registrar-comunidad")
       } else{
+        if(windowSelect === "1"){
+          localStorage.setItem('window', "Caja A")
+        } else if(windowSelect === "2"){
+          localStorage.setItem('window', "Caja B")
+        } else if(windowSelect === "3"){
+          localStorage.setItem('window', "Caja C")
+        } else if(windowSelect === "4"){
+          localStorage.setItem('window', "Caja D")
+        } else {
+          localStorage.setItem('window', "Caja E")
+        }
         navigate("/cambio-de-turno")
       }
     })
