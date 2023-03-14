@@ -18,6 +18,7 @@ function App() {
           <Route path='/registrar-comunidad' element={<RegisterCommunity/>}/>
           <Route path='/seleccion-de-caja' element={<WindowSelection/>}/>
           <Route path='/cambio-de-turno' element={<TurnChange/>}/>
+          <Route path='/tabla-de-admin' element={<AdminTable/>}/>
         </Routes>
       </BrowserRouter>
     </div>
