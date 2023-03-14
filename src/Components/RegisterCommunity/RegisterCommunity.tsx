@@ -1,13 +1,13 @@
 import './RegisterCommunity.css';
 import React, {useCallback, useState} from 'react';
 import logo from '../../Assets/Logo_bamx.svg';
+import { Box, IconButton, Modal, TextField } from '@mui/material';
 import { styled, ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles';
 import { ReactComponent as CloseIcon } from '../../Assets/Icon_close.svg';
 import { ReactComponent as LinkIcon } from '../../Assets/Icon_link.svg';
 import { ReactComponent as LogoutIcon } from '../../Assets/Icon_logout.svg';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import { Navigate } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
@@ -112,6 +112,11 @@ function RegisterCommunity() {
 
   const [token] = useState(localStorage.getItem('user-token') || null)
   const [id, setId] = useState('')
+  const [link, setLink] = useState("")
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const api = 'https://bamx-cxehn.ondigitalocean.app/'
   const navigate = useNavigate();
@@ -158,7 +163,8 @@ function RegisterCommunity() {
       headers: {Authorization : `token ${token}`}
     })
     .then( result => {
-      localStorage.setItem('user-token', "")
+      localStorage.removeItem('user-token')
+      localStorage.removeItem('window')
       navigate("/")
     })
     .catch( error => {
@@ -167,8 +173,22 @@ function RegisterCommunity() {
 
   }
 
-  function goToTurnTable(){
-    navigate("/tabla-de-turnos")
+  function updateGoogleLink(){
+    axios
+    .patch(api + "link/1/", {
+      liga: link
+    },
+    {
+      headers: {Authorization : `token ${token}`}
+    })
+    .then( result => {
+      localStorage.setItem('link', link)
+      console.log(result)
+      handleClose()
+    })
+    .catch( error => {
+      console.log(error)
+    })
   }
 
   function confirmarIngresoDeComunidad() {
@@ -187,12 +207,20 @@ function RegisterCommunity() {
 
   async function postTurn(comunidad: String){
     const turno = Number(localStorage.getItem("turn")) + 1
+    console.log(turno)
+    console.log(token)
     await axios
     .post(api + "turnos/", {
       numero: turno,
       comunidad: comunidad
+    },
+    {
+      headers: {Authorization : `token ${token}`}
     })
     .then( result => {
+      localStorage.setItem("turn", String(turno))
+      // Clean input
+      // Alert here
       console.log(result)
     })
     .catch( error => {
@@ -227,9 +255,9 @@ function RegisterCommunity() {
             <BarButton
             onMouseEnter={() => hoverHandler(true,1)}
             onMouseLeave={() => hoverHandler(false,1)} 
-            onClick={() => goToTurnTable()}
+            onClick={handleOpen}
             startIcon={<LinkIcon className={hoverLink} width={'2vw'} />} >
-              Acceder a tabla de turnos
+              Actualizar google sheets
             </BarButton>
             <BarButton 
             onMouseEnter={() => hoverHandler(true,0)}
@@ -238,7 +266,22 @@ function RegisterCommunity() {
             startIcon={<LogoutIcon className={hoverLogout} width={'2vw'} />} >
               Cerrar Sesión
             </BarButton>
-
+            <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            >
+            <Box sx={style}>
+              <IconButton onClick={handleClose} aria-label="close">
+                <CloseIcon />
+              </IconButton>
+              <LinkTextField id="outlined-basic" color='secondary' label="Nuevo link de Google Sheets" variant="outlined" onChange={(newValue) => setLink(newValue.target.value)} />
+              <LinkButton onClick={updateGoogleLink}>
+                Confirmar
+              </LinkButton>
+            </Box>
+          </Modal>
           </div>
         <div className="Register-container">
           <h1 className="Register-h1">Ingresa el ID de la <br/> comunidad</h1> 
