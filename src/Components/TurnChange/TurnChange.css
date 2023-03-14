@@ -23,16 +23,6 @@
   justify-content: center;
 }
 
-.Container-body {
-  background-color: white;
-  border-radius: 20px;
-  min-height: 78vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
 .Button-container {
   display: flex;
   flex-direction: row;
@@ -40,28 +30,30 @@
   gap: 2vw;
   justify-content: flex-end;
   padding-bottom: 1vh;
+  width: 100%;
 }
 
 .Container-top {
-  gap: 3vw;
+  gap: 10vw;
+  width: 100%;
   padding: 6vh 3vw;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
 
 .h1 {
-  max-width: 40vw;
   word-wrap: break-word;
-  font-size: 15vmin;
+  font-size: 7vmin;
   font-family: 'Bebas Neue', cursive;
   color: #602E36;
 }
+
 .h2 {
   font-family: 'Bebas Neue', cursive;
   font-size: 5vmin;
-  width: 52vw;
+  width: 35vw;
   text-align: center;
   color: #BB681A;
 }
@@ -72,7 +64,7 @@
   font-family: 'DM Sans', sans-serif;
   font-weight: 700;
   font-size: 5vmin;
-  text-align: center;
+  text-align:start ;
   align-items: center;
   gap: 5vh;
 }
@@ -96,6 +88,14 @@
   font-size: 5vmin;
   text-align: center;
   color: #000000;
+}
+
+.Turn-label-box {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 17vmin;
+  text-align: center;
+  color: #D00C2B;
+  margin: -1.4vh 0;
 }
 
 .Logout {
