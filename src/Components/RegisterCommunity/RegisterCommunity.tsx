@@ -251,7 +251,7 @@ function RegisterCommunity() {
   return (
     <ThemeProvider theme={theme}>
       <div className="Register-root-container" >
-        <div className="Button-container">
+        <div className="Button-container-r">
             <BarButton
             onMouseEnter={() => hoverHandler(true,1)}
             onMouseLeave={() => hoverHandler(false,1)} 

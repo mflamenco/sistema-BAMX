@@ -8,11 +8,11 @@
   position: absolute;
 }
 
-.Button-container {
+.Button-container-r {
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 90vw;
+  width: 90%;
   gap: 2vw;
   justify-content: flex-end;
   padding-bottom: 1vh;
