@@ -112,7 +112,7 @@ function RegisterCommunity() {
   const [token] = useState(localStorage.getItem('user-token') || null)
   const [id, setId] = useState('')
   const [link, setLink] = useState("")
-
+  const currentWindow = String(localStorage.getItem('window'))
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -126,38 +126,24 @@ function RegisterCommunity() {
   const [hoverLogout, setHoverLogout] = useState('Logout');
   const [hoverLink, sethoverLink] = useState('Logout');
 
-  function getCajaNumber(caja: String){
-    if(caja === "Caja A"){
+  function getWindowNumber(window: String){
+    if(window === "Caja A"){
       return "1"
-    } else if (caja === "Caja B"){
+    } else if (window === "Caja B"){
       return "2"
-    } else if (caja === "Caja C"){
+    } else if (window === "Caja C"){
       return "3"
-    } else if (caja === "Caja D"){
+    } else if (window === "Caja D"){
       return "4"
-    } else if (caja === "Caja E"){
+    } else if (window === "Caja E"){
       return "5"
     }
     return "6"
   }
 
-  function logout() {
-    axios
-      .get(api + "users/my", 
-      {
-        headers: {Authorization : `token ${token}`}
-      })
-      .then( result => {
-        updateCajaWithUser(result.data.caja)
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  }
-
-  async function updateCajaWithUser(cajaSeleccionada: String){
+  async function logout(){
     await axios
-    .patch(api + "cajas/" + getCajaNumber(cajaSeleccionada) + "/",
+    .patch(api + "cajas/" + getWindowNumber(currentWindow) + "/",
     {
       user: null
     },
@@ -193,14 +179,17 @@ function RegisterCommunity() {
     })
   }
 
-  function confirmarIngresoDeComunidad() {
+  function confirmCommunityEntry() {
     const errorMess = document.getElementById('id-error') as HTMLInputElement;
+    const textField = document.getElementById('outlined-basic-id') as HTMLInputElement;
+
     axios
     .get(api + "comunidades/get_comunidad_por_clave_sae/?clave_sae=" + id, {
       headers: {Authorization : `token ${token}`}
     })
     .then( result => {
       errorMess.style.display = "none"
+      textField.value = ""
       postTurn(result.data.id)
     })
     .catch( error => {
@@ -214,20 +203,20 @@ function RegisterCommunity() {
     
   }
 
-  async function postTurn(comunidad: String){
-    const turno = Number(localStorage.getItem("turn")) + 1
-    console.log(turno)
+  async function postTurn(community: String){
+    const turn = Number(localStorage.getItem("turn")) + 1
+    console.log(turn)
     console.log(token)
     await axios
     .post(api + "turnos/", {
-      numero: turno,
-      comunidad: comunidad
+      numero: turn,
+      comunidad: community
     },
     {
       headers: {Authorization : `token ${token}`}
     })
     .then( result => {
-      localStorage.setItem("turn", String(turno))
+      localStorage.setItem("turn", String(turn))
       // Clean input
       console.log(result)
     })
@@ -293,9 +282,9 @@ function RegisterCommunity() {
           </div>
         <div className="Register-container">
           <h1 className="Register-h1">Ingresa el ID de la <br/> comunidad</h1> 
-          <TextField id="outlined-basic" label="ID" onChange={(newValue) => setId(newValue.target.value)} variant="outlined" color='secondary' className='TextField'/>
+          <TextField id="outlined-basic-id" label="ID" onChange={(newValue) => setId(newValue.target.value)} variant="outlined" color='secondary' className='TextField'/>
           <h3 className="error-message" id="id-error"> {errorMess} </h3>
-          <ConfirmButton onClick={() => confirmarIngresoDeComunidad()}>Confirmar</ConfirmButton>
+          <ConfirmButton onClick={() => confirmCommunityEntry()}>Confirmar</ConfirmButton>
         </div>
         <img alt='logo de banco de alimentos' className="Register-img" src={logo}/>
       </div>
