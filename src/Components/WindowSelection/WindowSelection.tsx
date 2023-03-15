@@ -91,7 +91,7 @@ function WindowSelection() {
   } else {
     return <Navigate to="/"/>
   }
-  
+
   if (sendTable){
     return <Navigate to="/tabla-de-turnos"/>
   }
@@ -139,6 +139,33 @@ function WindowSelection() {
     }
   }
 
+  function disableStartWindow(id: number) {
+    let window = '';
+    if (id === 1) {
+      setDisableA(true)
+      window = 'A';
+    } else if (id === 2) {
+      setDisableB(true)
+      window = 'B';
+    } else if (id === 3) {
+      setDisableC(true)
+      window = 'C';
+    } else if (id === 4) {
+      setDisableD(true)
+      window = 'D';
+    } else if (id === 5) {
+      setDisableE(true)
+      window = 'E';
+    } else {
+      setDisableAdmin(true)
+      window = 'Admin';
+    }
+
+    const button = document.getElementById(`${window}`) as HTMLInputElement; 
+    setButtonDisabled(button, true)
+
+
+  }
   function selectWindow(window: String) {
     const button = document.getElementById(`${window}`) as HTMLInputElement;
     const buttons = document.getElementsByClassName("Button") as HTMLCollection
@@ -246,6 +273,27 @@ function WindowSelection() {
         console.log(error)
       })
   }
+async function disableCurrentWindows(){
+    await axios
+    .get(api + "cajas/", 
+      {
+        headers: {Authorization : `token ${token}`}
+      })
+    .then( result => {
+      for (let i = 0; i < result.data.length; i++) {
+        if (result.data[i].user) {
+          disableStartWindow(result.data[i].id)
+        }
+
+      }
+    })
+    .catch( error => {
+      console.log(error)
+    })
+
+  }
+
+  disableCurrentWindows();
 
   async function updateWindowWithUser(id: String){
     console.log(windowSelect)
