@@ -46,7 +46,8 @@ const ConfirmButton = styled(Button)({
 
 function WindowSelection() {
   const [token] = useState(localStorage.getItem('user-token') || null)
-  
+  const [sendTable, setSendTable] = useState(false)
+
   // Variables to know when a button is selected
   const [windowA, setWindowA] = useState(false)
   const [windowB, setWindowB] = useState(false)
@@ -90,8 +91,7 @@ function WindowSelection() {
   } else {
     return <Navigate to="/"/>
   }
-
-  function sendTurntable() {
+  if (sendTable){
     return <Navigate to="/tabla-de-turnos"/>
   }
   
@@ -303,7 +303,7 @@ function WindowSelection() {
           marginTop: '-7vh',
           fontSize: '3vmin',
         }} 
-        className='Link-table' component="button" variant="body2" onClick={() => <Navigate to="/tabla-de-turnos"/>} color='#EA2040'>
+        className='Link-table' component="button" variant="body2" onClick={() => setSendTable(true)} color='#EA2040'>
           Ir a la tabla de turnos
         </Link>
       </div>
