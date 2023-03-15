@@ -4,13 +4,13 @@ import { initializeIcons } from '@fluentui/react/lib/Icons';
 import { Box, IconButton, Modal, TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { ReactComponent as CloseIcon } from '../../Assets/Icon_close.svg';
 import { ReactComponent as LinkIcon } from '../../Assets/Icon_link.svg';
 import { ReactComponent as LogoutIcon } from '../../Assets/Icon_logout.svg';
 import { ReactComponent as TrashIcon } from '../../Assets/Icon_trash.svg';
-import axios from 'axios';
 
 import logo from '../../Assets/Logo_bamx.svg';
 import './AdminTable.css';
@@ -227,6 +227,25 @@ function AdminTable() {
     }
   }, [lastHeader, originalItemsCol, originalItemsCom]);
 
+  const getUserType = async ()=>{
+    await axios
+      .get(api + "users/my", 
+      {
+        headers: {Authorization : `token ${token}`}
+      })
+      .then( result => {
+        console.log(result.data.is_superuser)
+        if (!result.data.is_superuser) {
+          navigate("/")
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
+  getUserType();
+
   function updateGoogleLink(){
     axios
     .patch(api + "link/1/", {
@@ -260,6 +279,10 @@ function AdminTable() {
       }
     }
   }, []);
+
+  if(!token){
+    return <Navigate to="/"/>
+  }
 
   function logout(){
     localStorage.removeItem('user-token')

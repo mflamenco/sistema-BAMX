@@ -91,6 +91,7 @@ function WindowSelection() {
   } else {
     return <Navigate to="/"/>
   }
+  
   if (sendTable){
     return <Navigate to="/tabla-de-turnos"/>
   }
