@@ -1,14 +1,17 @@
-import { getFocusStyle, getTheme, ITheme, List, mergeStyleSets, Pivot, PivotItem, SearchBox, Text, IPivotItemProps } from '@fluentui/react';
+import { getFocusStyle, getTheme, IPivotItemProps, ITheme, List, mergeStyleSets, Pivot, PivotItem, SearchBox, Text } from '@fluentui/react';
 import { IIconProps } from '@fluentui/react/lib/Icon';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 import { Box, IconButton, Modal, TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ReactComponent as CloseIcon } from '../../Assets/Icon_close.svg';
 import { ReactComponent as LinkIcon } from '../../Assets/Icon_link.svg';
 import { ReactComponent as LogoutIcon } from '../../Assets/Icon_logout.svg';
 import { ReactComponent as TrashIcon } from '../../Assets/Icon_trash.svg';
+import axios from 'axios';
+
 import logo from '../../Assets/Logo_bamx.svg';
 import './AdminTable.css';
 
@@ -16,6 +19,7 @@ initializeIcons();
 
 const iconProps:IIconProps = { iconName: 'Search' };
 const theme: ITheme = getTheme();
+
 
 type IItem = {
   name: string;
@@ -167,6 +171,9 @@ const style = {
 };
 
 function AdminTable() {
+  const api = 'https://bamx-cxehn.ondigitalocean.app/'
+  const navigate = useNavigate();
+  const [link, setLink] = useState("")
   const [lastHeader, setLastHeader] = useState<{ props: IPivotItemProps } | undefined>(undefined);
   const [openL, setOpenL] = useState(false);
   const handleOpenL = () => setOpenL(true);
@@ -198,7 +205,7 @@ function AdminTable() {
     {name: 'comunidad 7', id: 'i17'},
     {name: 'comunidad 8', id: 'i28'}
   ]);
-
+  const [token] = useState(localStorage.getItem('user-token') || null)
   const [originalItems, setOriginalItems] = useState(originalItemsCol);
   const [items, setItems] = useState(originalItems);
 
@@ -220,6 +227,24 @@ function AdminTable() {
     }
   }, [lastHeader, originalItemsCol, originalItemsCom]);
 
+  function updateGoogleLink(){
+    axios
+    .patch(api + "link/1/", {
+      liga: link
+    },
+    {
+      headers: {Authorization : `token ${token}`}
+    })
+    .then( result => {
+      localStorage.setItem('link', link)
+      console.log(result)
+      handleCloseL()
+    })
+    .catch( error => {
+      console.log(error)
+    })
+  }
+
   const hoverHandler = useCallback((isHover: boolean, indexButton: number) => {
     if (isHover) {
       if (indexButton === 0) {
@@ -235,6 +260,12 @@ function AdminTable() {
       }
     }
   }, []);
+
+  function logout(){
+    localStorage.removeItem('user-token')
+    localStorage.removeItem('window')
+    navigate("/")
+  }
 
   const handleDelete = (id: string| undefined) => {
     const updatedList = items.filter((item) => item.id !== id);
@@ -287,6 +318,7 @@ function AdminTable() {
               Actualizar google sheets
             </BarButton>
             <BarButton 
+            onClick={logout}
             onMouseEnter={() => hoverHandler(true,0)}
             onMouseLeave={() => hoverHandler(false,0)} 
             startIcon={<LogoutIcon className={hoverLogout} width={'2vw'} />} >
@@ -302,8 +334,8 @@ function AdminTable() {
                 <IconButton onClick={handleCloseL} aria-label="close">
                   <CloseIcon />
                 </IconButton>
-                <LinkTextField id="outlined-basic" color='secondary' label="Nuevo link de Google Sheets" variant="outlined" />
-                <LinkButton onClick={handleCloseL}>
+                <LinkTextField id="outlined-basic" color='secondary' label="Nuevo link de Google Sheets" variant="outlined" onChange={(newValue) => setLink(newValue.target.value)} />
+                <LinkButton onClick={updateGoogleLink}>
                   Confirmar
                 </LinkButton>
               </Box>
