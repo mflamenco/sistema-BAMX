@@ -140,10 +140,23 @@ function RegisterCommunity() {
     }
     return "6"
   }
+  function logout() {
+    axios
+      .get(api + "users/my", 
+      {
+        headers: {Authorization : `token ${token}`}
+      })
+      .then( result => {
+        updateWindowWithUser(result.data.caja)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
 
-  async function logout(){
+  async function updateWindowWithUser(cajaSeleccionada: String){
     await axios
-    .patch(api + "cajas/" + getWindowNumber(currentWindow) + "/",
+    .patch(api + "cajas/" + getWindowNumber(cajaSeleccionada) + "/",
     {
       user: null
     },
