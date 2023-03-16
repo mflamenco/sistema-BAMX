@@ -1,5 +1,5 @@
 import './RegisterCommunity.css';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import logo from '../../Assets/Logo_bamx.svg';
 import { Box, IconButton, Modal, TextField } from '@mui/material';
 import { styled, ThemeProvider } from '@mui/material/styles';
@@ -128,7 +128,9 @@ function RegisterCommunity() {
 
   const [errorMess, setErrorMess] = useState("")
 
-
+  useEffect(() => {
+    handleOpenRow();
+  }, []);
 
   const api = 'https://bamx-cxehn.ondigitalocean.app/'
   const navigate = useNavigate();
