@@ -175,6 +175,10 @@ function AdminTable() {
   const api = 'https://bamx-cxehn.ondigitalocean.app/'
   const navigate = useNavigate();
   const [link, setLink] = useState("")
+  const [firstField, setFirstField] = useState("")
+  const [secondField, setSecondField] = useState("")
+
+
   const [lastHeader, setLastHeader] = useState<{ props: IPivotItemProps } | undefined>(undefined);
   const [openL, setOpenL] = useState(false);
   const handleOpenL = () => setOpenL(true);
@@ -200,6 +204,8 @@ function AdminTable() {
   const onFilterChanged = (_: any, text: string | undefined): void => {
     if (text) {
       setItems(originalItems.filter(item => item.name.toLowerCase().indexOf(text.toLowerCase()) >= 0));
+    } else {
+      setItems(originalItems)
     };
   };
 
@@ -231,6 +237,7 @@ function AdminTable() {
         console.log(error)
       })
   }
+
   const getCommunity = async ()=>{
     await axios
       .get(api + "comunidades/", 
@@ -240,7 +247,7 @@ function AdminTable() {
       .then( result => {
         let tempList: IItem[] = []
         for (let i = 0; i < result.data.length; i++) {
-          tempList.push({name: result.data[i].nombre, id: result.data[i].id})        
+          tempList.push({name: result.data[i].nombre, id: result.data[i].id.toString()})        
         }
         setOriginalItemsCom(tempList)        
 
@@ -250,7 +257,7 @@ function AdminTable() {
       })
   }
 
-  const getUsers = async ()=>{
+  const getUsers = async () => {
     await axios
       .get(api + "users/", 
       {
@@ -260,7 +267,7 @@ function AdminTable() {
         let tempList: IItem[] = []
         for (let i = 0; i < result.data.length; i++) {
           if(!result.data[i].is_superuser) {
-            tempList.push({name: result.data[i].username, id: result.data[i].id})        
+            tempList.push({name: result.data[i].username, id: result.data[i].id.toString()})        
           }
         }
         setOriginalItemsCol(tempList)        
@@ -316,6 +323,57 @@ function AdminTable() {
     return <Navigate to="/"/>
   }
 
+  function createUser(){
+    console.log('llegue')
+    axios
+    .post(api + "users/", {
+      username: firstField,
+      password: secondField
+      
+    },
+    {
+      headers: {Authorization : `token ${token}`}
+    })
+    .then( result => {
+      const newList: IItem[] = items
+      newList.push({name: firstField, id: (items.length + 2).toString()})
+      console.log('new list')
+      console.log(newList)
+      setOriginalItemsCol(newList);
+      setOriginalItems(originalItemsCol);
+      setItems(originalItems);
+      console.log(items)
+      handleCloseC()
+    })
+    .catch( error => {
+      console.log(error)
+    })
+  }
+
+  function createCommunity(){
+    axios
+    .post(api + "comunidades/", {
+      nombre: secondField,
+      clave_sae: firstField 
+    },
+    {
+      headers: {Authorization : `token ${token}`}
+    })
+    .then( result => {
+      const newList: IItem[] = items
+      newList.push({name: secondField, id: (items.length + 2).toString()})
+      console.log('new list')
+      console.log(newList)
+      setOriginalItemsCom(newList);
+      setOriginalItems(originalItemsCom);
+      setItems(originalItems);
+      handleCloseC()
+    })
+    .catch( error => {
+      console.log(error)
+    })
+  }
+
   function updateGoogleRow(){
     console.log(row)
     axios
@@ -355,7 +413,7 @@ function AdminTable() {
 
   const onRenderCell = (item: IItem| undefined, index: number | undefined): JSX.Element => {
     return (
-      <div className={classNames.itemCell} data-is-focusable={true}>
+      <div className={classNames.itemCell}>
         <div className={classNames.itemContent}>
           <div className={classNames.itemName}>{item?.name}</div>
           <IconButton aria-label="delete" onClick={() => handleDelete(item?.id) }>
@@ -473,9 +531,9 @@ function AdminTable() {
                     <IconButton onClick={handleCloseC} aria-label="close">
                       <CloseIcon />
                     </IconButton>
-                    <LinkTextField id="outlined-basic" color='primary' label={lastHeader ? (lastHeader.props.headerText === "Comunidad" ? ("Clave de comunidad"): ("Clave de colaborador")) : ("Clave de usuario")} variant="outlined" />
-                    <LinkTextField id="outlined-basic" color='primary' label={lastHeader ? (lastHeader.props.headerText === "Comunidad" ? ("Nombre de comunidad"): ("Contraseña")) : ("Contraseña")} variant="outlined" />
-                    <CreateButton onClick={handleCloseC}>
+                    <LinkTextField id="outlined-basic" color='primary' label={lastHeader ? (lastHeader.props.headerText === "Comunidad" ? ("Clave de comunidad"): ("Usuario")) : ("Usuario")} variant="outlined"  onChange={(newValue) => setFirstField(newValue.target.value)}/>
+                    <LinkTextField id="outlined-basic" color='primary' label={lastHeader ? (lastHeader.props.headerText === "Comunidad" ? ("Nombre de comunidad"): ("Contraseña")) : ("Contraseña")} variant="outlined" onChange={(newValue) => setSecondField(newValue.target.value)}/>
+                    <CreateButton onClick={lastHeader ? (lastHeader.props.headerText === "Comunidad" ? (createCommunity): (createUser)) : (createUser)}>
                       Crear
                     </CreateButton>
                   </Box>
