@@ -1,17 +1,15 @@
-import './RegisterCommunity.css';
-import React, {useCallback, useEffect, useState} from 'react';
-import logo from '../../Assets/Logo_bamx.svg';
 import { Box, IconButton, Modal, TextField } from '@mui/material';
-import { styled, ThemeProvider } from '@mui/material/styles';
-import { createTheme } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
+import { useCallback, useEffect, useState } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { ReactComponent as CloseIcon } from '../../Assets/Icon_close.svg';
+import { ReactComponent as ExcelIcon } from '../../Assets/Icon_excel.svg';
 import { ReactComponent as LinkIcon } from '../../Assets/Icon_link.svg';
 import { ReactComponent as LogoutIcon } from '../../Assets/Icon_logout.svg';
-import { ReactComponent as ExcelIcon } from '../../Assets/Icon_excel.svg';
-import Button from '@mui/material/Button';
-import { Navigate } from 'react-router-dom';
-import { useNavigate } from "react-router-dom";
-import axios from 'axios';
+import logo from '../../Assets/Logo_bamx.svg';
+import './RegisterCommunity.css';
 
 
 const ConfirmButton = styled(Button)({
@@ -114,7 +112,6 @@ function RegisterCommunity() {
   const [id, setId] = useState('')
   const [link, setLink] = useState("")
   const [row, setRow] = useState(0)
-  const currentWindow = String(localStorage.getItem('window'))
 
   // Google sheets link modal
   const [open, setOpen] = useState(false);
@@ -214,6 +211,7 @@ function RegisterCommunity() {
       headers: {Authorization : `token ${token}`}
     })
     .then( result => {
+      localStorage.setItem("turn", "0")
       localStorage.setItem('row', String(row-1))
       console.log(result)
       handleCloseRow()
