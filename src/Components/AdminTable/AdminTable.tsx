@@ -185,26 +185,8 @@ function AdminTable() {
 
   const [hoverLogout, setHoverLogout] = useState('Logout');
   const [hoverLink, setHoverLink] = useState('Logout');
-  const [originalItemsCol, setOriginalItemsCol] = useState([
-    {name: 'colaborador 1', id: 'i1'},
-    {name: 'colaborador 2', id: 'i2'},
-    {name: 'colaborador 3', id: 'i3'},
-    {name: 'colaborador 4', id: 'i4'},
-    {name: 'colaborador 5', id: 'i5'},
-    {name: 'colaborador 6', id: 'i6'},
-    {name: 'colaborador 7', id: 'i7'},
-    {name: 'colaborador 8', id: 'i8'}
-  ]);
-  const [originalItemsCom, setOriginalItemsCom] = useState([
-    {name: 'comunidad 1', id: 'i9'},
-    {name: 'comunidad 2', id: 'i21'},
-    {name: 'comunidad 3', id: 'i12'},
-    {name: 'comunidad 4', id: 'i24'},
-    {name: 'comunidad 5', id: 'i15'},
-    {name: 'comunidad 6', id: 'i26'},
-    {name: 'comunidad 7', id: 'i17'},
-    {name: 'comunidad 8', id: 'i28'}
-  ]);
+  const [originalItemsCol, setOriginalItemsCol] = useState([{name: '', id: ''}]);
+  const [originalItemsCom, setOriginalItemsCom] = useState([{name: '', id: ''}]);
   const [token] = useState(localStorage.getItem('user-token') || null)
   const [originalItems, setOriginalItems] = useState(originalItemsCol);
   const [items, setItems] = useState(originalItems);
@@ -243,6 +225,50 @@ function AdminTable() {
         console.log(error)
       })
   }
+  const getCommunity = async ()=>{
+    await axios
+      .get(api + "comunidades/", 
+      {
+        headers: {Authorization : `token ${token}`}
+      })
+      .then( result => {
+        let tempList: IItem[] = []
+        for (let i = 0; i < result.data.length; i++) {
+          tempList.push({name: result.data[i].nombre, id: result.data[i].id})        
+        }
+        setOriginalItemsCom(tempList)        
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
+  const getUsers = async ()=>{
+    await axios
+      .get(api + "users/", 
+      {
+        headers: {Authorization : `token ${token}`}
+      })
+      .then( result => {
+        let tempList: IItem[] = []
+        for (let i = 0; i < result.data.length; i++) {
+          if(!result.data[i].is_superuser) {
+            tempList.push({name: result.data[i].username, id: result.data[i].id})        
+          }
+        }
+        setOriginalItemsCol(tempList)        
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
+  useEffect(() => {
+    getCommunity();
+    getUsers();
+  }, []);
 
   getUserType();
 
