@@ -7,6 +7,7 @@ import { createTheme } from '@mui/material/styles';
 import { ReactComponent as CloseIcon } from '../../Assets/Icon_close.svg';
 import { ReactComponent as LinkIcon } from '../../Assets/Icon_link.svg';
 import { ReactComponent as LogoutIcon } from '../../Assets/Icon_logout.svg';
+import { ReactComponent as ExcelIcon } from '../../Assets/Icon_excel.svg';
 import Button from '@mui/material/Button';
 import { Navigate } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
@@ -112,10 +113,19 @@ function RegisterCommunity() {
   const [token] = useState(localStorage.getItem('user-token') || null)
   const [id, setId] = useState('')
   const [link, setLink] = useState("")
+  const [row, setRow] = useState(0)
   const currentWindow = String(localStorage.getItem('window'))
+
+  // Google sheets link modal
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  // Google sheets row modal
+  const [openRow, setOpenRow] = useState(false);
+  const handleOpenRow = () => setOpenRow(true);
+  const handleCloseRow = () => setOpenRow(false);
+
   const [errorMess, setErrorMess] = useState("")
 
 
@@ -179,9 +189,27 @@ function RegisterCommunity() {
     })
   }
 
+  function updateGoogleRow(){
+    console.log(row)
+    axios
+    .patch(api + "link/1/", {
+      fila_inicial: row - 1
+    },
+    {
+      headers: {Authorization : `token ${token}`}
+    })
+    .then( result => {
+      localStorage.setItem('row', String(row-1))
+      console.log(result)
+      handleCloseRow()
+    })
+    .catch( error => {
+      console.log(error)
+    })
+  }
+
   function confirmCommunityEntry() {
     const errorMess = document.getElementById('id-error') as HTMLInputElement;
-    const textField = document.getElementById('outlined-basic-id') as HTMLInputElement;
 
     axios
     .get(api + "comunidades/get_comunidad_por_clave_sae/?clave_sae=" + id, {
@@ -189,7 +217,6 @@ function RegisterCommunity() {
     })
     .then( result => {
       errorMess.style.display = "none"
-      textField.value = ""
       postTurn(result.data.id)
     })
     .catch( error => {
@@ -204,6 +231,7 @@ function RegisterCommunity() {
   }
 
   async function postTurn(community: String){
+    const textField = document.getElementById('outlined-basic-id') as HTMLInputElement;
     const turn = Number(localStorage.getItem("turn")) + 1
     console.log(turn)
     console.log(token)
@@ -217,7 +245,7 @@ function RegisterCommunity() {
     })
     .then( result => {
       localStorage.setItem("turn", String(turn))
-      // Clean input
+      textField.value = ""
       console.log(result)
     })
     .catch( error => {
@@ -250,11 +278,18 @@ function RegisterCommunity() {
       <div className="Register-root-container" >
         <div className="Button-container-r">
             <BarButton
-            onMouseEnter={() => hoverHandler(true,1)}
-            onMouseLeave={() => hoverHandler(false,1)} 
+            onMouseEnter={() => hoverHandler(true,2)}
+            onMouseLeave={() => hoverHandler(false,2)} 
             onClick={handleOpen}
             startIcon={<LinkIcon className={hoverLink} width={'2vw'} />} >
               Actualizar google sheets
+            </BarButton>
+            <BarButton
+            onMouseEnter={() => hoverHandler(true,1)}
+            onMouseLeave={() => hoverHandler(false,1)} 
+            onClick={handleOpenRow}
+            startIcon={<ExcelIcon className={hoverLink} width={'2vw'} />} >
+              Actualizar fila inicial
             </BarButton>
             <BarButton 
             onMouseEnter={() => hoverHandler(true,0)}
@@ -275,6 +310,23 @@ function RegisterCommunity() {
               </IconButton>
               <LinkTextField id="outlined-basic" color='secondary' label="Nuevo link de Google Sheets" variant="outlined" onChange={(newValue) => setLink(newValue.target.value)} />
               <LinkButton onClick={updateGoogleLink}>
+                Confirmar
+              </LinkButton>
+            </Box>
+          </Modal>
+
+          <Modal
+            open={openRow}
+            onClose={handleCloseRow}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            >
+            <Box sx={style}>
+              <IconButton onClick={handleCloseRow} aria-label="close">
+                <CloseIcon />
+              </IconButton>
+              <LinkTextField type="number" id="outlined-basic" color='secondary' label="Nueva fila de Google Sheets" variant="outlined" onChange={(newValue) => setRow(Number(newValue.target.value))} />
+              <LinkButton onClick={updateGoogleRow}>
                 Confirmar
               </LinkButton>
             </Box>

@@ -1,9 +1,7 @@
-import { Box, IconButton, Modal, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
-import { useCallback, useState } from "react";
-import { ReactComponent as CloseIcon } from '../../Assets/Icon_close.svg';
-import { ReactComponent as LinkIcon } from '../../Assets/Icon_link.svg';
+import { useCallback, useState, useEffect } from "react";
 import { ReactComponent as LogoutIcon } from '../../Assets/Icon_logout.svg';
 import { Navigate } from 'react-router-dom';
 import { Text } from '@fluentui/react'
@@ -107,12 +105,20 @@ function TurnChange() {
   const [hoverLogout, setHoverLogout] = useState('Logout');
   const [hoverLink, sethoverLink] = useState('Logout');
 
+  const currentWindow = String(localStorage.getItem('window'))
   const [token] = useState(localStorage.getItem('user-token') || null)
+
+  const [currentTurn, setTurn] = useState("")
+  const [currentCommunity, setCommunity] = useState("")
+
+  /*useEffect(() => {
+    setInterval(() => getTurn(), 30000);
+  }, []);*/
 
   const api = 'https://bamx-cxehn.ondigitalocean.app/'
   const navigate = useNavigate();
 
-  function getCajaNumber(caja: String){
+  function getWindowNumber(caja: String){
     if(caja === "Caja A"){
       return "1"
     } else if (caja === "Caja B"){
@@ -134,16 +140,16 @@ function TurnChange() {
         headers: {Authorization : `token ${token}`}
       })
       .then( result => {
-        updateCajaWithUser(result.data.caja)
+        updateWindowWithUser(result.data.caja)
       })
       .catch(error => {
         console.log(error)
       })
   }
 
-  async function updateCajaWithUser(cajaSeleccionada: String){
+  async function updateWindowWithUser(windowSeleted: String){
     await axios
-    .patch(api + "cajas/" + getCajaNumber(cajaSeleccionada) + "/",
+    .patch(api + "cajas/" + getWindowNumber(windowSeleted) + "/",
     {
       user: null
     },
@@ -160,6 +166,68 @@ function TurnChange() {
       console.log(error)
     })
 
+  }
+
+  
+
+  function getTurn(){
+    console.log(token)
+    console.log(api + "cajas/" + getWindowNumber(currentWindow) + "/siguiente_turno/")
+    axios
+    .patch(api + "cajas/" + getWindowNumber(currentWindow) + "/siguiente_turno/",
+    {},
+    {
+      headers: {Authorization : `token ${token}`}
+    })
+    .then( result => {
+      console.log(result)
+      if(result.data.status === "no hay turnos pendientes"){
+        setTurn("No hay turnos activos en este momento")
+        setCommunity("")
+      } else {
+        getTurnsActive()
+      }
+    })
+    .catch( error => {
+      console.log(error)
+    })
+  }
+
+  async function getCommunityNameById(id: String){
+    let nombre = ""
+    await axios
+    .get(api + "comunidades/" + id + "/", 
+    {
+      headers: {Authorization : `token ${token}`}
+    })
+    .then( result => {
+      console.log(result.data)
+      setCommunity(String(result.data.nombre))
+    })
+    .catch( error => {
+      console.log(error)
+    })
+  }
+
+  function getTurnsActive(){
+    axios
+    .get(api + "turnos/",
+    {
+      headers: {Authorization : `token ${token}`,
+    }
+    })
+    .then( result => {
+      for(let i = 0; i < result.data.length ; i++){
+        console.log(result.data[i].caja)
+        if(String(result.data[i].caja) === getWindowNumber(currentWindow)){
+          setTurn("Turno " + String(result.data[i].numero))
+          getCommunityNameById(result.data[i].comunidad)
+        }
+      }
+    })
+    .catch( error => {
+      console.log(error)
+    })
   }
 
   const hoverHandler = useCallback((isHover: boolean, indexButton: number) => {
@@ -200,35 +268,12 @@ function TurnChange() {
       <div className='Container'>
         <div className="Button-container">
           <BarButton 
-          onClick={handleOpen}
-          onMouseEnter={() => hoverHandler(true,1)}
-          onMouseLeave={() => hoverHandler(false,1)} 
-          startIcon={<LinkIcon className={hoverLink} width={'2vw'} />} >
-            Actualizar google sheets
-          </BarButton>
-          <BarButton 
           onMouseEnter={() => hoverHandler(true,0)}
           onMouseLeave={() => hoverHandler(false,0)} 
           onClick={() => logout()}
           startIcon={<LogoutIcon className={hoverLogout} width={'2vw'} />} >
             Cerrar Sesión
           </BarButton>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style}>
-              <IconButton onClick={handleClose} aria-label="close">
-                <CloseIcon />
-              </IconButton>
-              <LinkTextField id="outlined-basic" color='secondary' label="Nuevo link de Google Sheets" variant="outlined" />
-              <LinkButton onClick={handleClose}>
-                Confirmar
-              </LinkButton>
-            </Box>
-          </Modal>
         </div>
         <div className="Container-body">
           <div className="Container-top">
@@ -242,11 +287,11 @@ function TurnChange() {
             <div className="Turn">
               <Text className='h1'> Asistiendo a</Text>
               <div className="Turn-label">
-                <Text className="Turn-label-text"> turno 1</Text>
-                <Text className="Turn-label-text"> comunidad A</Text>
+                <Text className="Turn-label-text"> {currentTurn} </Text>
+                <Text className="Turn-label-text"> {currentCommunity} </Text>
               </div>
-              <TurnButton>
-                Finalizar turno
+              <TurnButton onClick={getTurn}>
+                Siguiente turno
               </TurnButton>
             </div>
           </div>
