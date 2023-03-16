@@ -7,6 +7,7 @@ import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { useCallback, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import { ReactComponent as ExcelIcon } from '../../Assets/Icon_excel.svg';
 import { ReactComponent as CloseIcon } from '../../Assets/Icon_close.svg';
 import { ReactComponent as LinkIcon } from '../../Assets/Icon_link.svg';
 import { ReactComponent as LogoutIcon } from '../../Assets/Icon_logout.svg';
@@ -182,6 +183,11 @@ function AdminTable() {
   const [openC, setOpenC] = useState(false);
   const handleOpenC = () => setOpenC(true);
   const handleCloseC = () => setOpenC(false);
+  const [row, setRow] = useState(0)
+
+  const [openR, setOpenR] = useState(false);
+  const handleOpenR = () => setOpenR(true);
+  const handleCloseR = () => setOpenR(false);
 
   const [hoverLogout, setHoverLogout] = useState('Logout');
   const [hoverLink, setHoverLink] = useState('Logout');
@@ -310,6 +316,25 @@ function AdminTable() {
     return <Navigate to="/"/>
   }
 
+  function updateGoogleRow(){
+    console.log(row)
+    axios
+    .patch(api + "link/1/", {
+      fila_inicial: row - 1
+    },
+    {
+      headers: {Authorization : `token ${token}`}
+    })
+    .then( result => {
+      localStorage.setItem('row', String(row-1))
+      console.log(result)
+      handleCloseR()
+    })
+    .catch( error => {
+      console.log(error)
+    })
+  }
+
   function logout(){
     localStorage.removeItem('user-token')
     localStorage.removeItem('window')
@@ -366,6 +391,13 @@ function AdminTable() {
             startIcon={<LinkIcon className={hoverLink} width={'2vw'} />} >
               Actualizar google sheets
             </BarButton>
+            <BarButton
+            onMouseEnter={() => hoverHandler(true,1)}
+            onMouseLeave={() => hoverHandler(false,1)} 
+            onClick={handleOpenR}
+            startIcon={<ExcelIcon className={hoverLink} width={'2vw'} />} >
+              Actualizar fila inicial
+            </BarButton>
             <BarButton 
             onClick={logout}
             onMouseEnter={() => hoverHandler(true,0)}
@@ -373,6 +405,22 @@ function AdminTable() {
             startIcon={<LogoutIcon className={hoverLogout} width={'2vw'} />} >
               Cerrar Sesión
             </BarButton>
+            <Modal
+            open={openR}
+            onClose={handleCloseR}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            >
+            <Box sx={style}>
+              <IconButton onClick={handleCloseR} aria-label="close">
+                <CloseIcon />
+              </IconButton>
+              <LinkTextField type="number" id="outlined-basic" color='secondary' label="Nueva fila de Google Sheets" variant="outlined" onChange={(newValue) => setRow(Number(newValue.target.value))} />
+              <LinkButton onClick={updateGoogleRow}>
+                Confirmar
+              </LinkButton>
+            </Box>
+          </Modal>
             <Modal
             open={openL}
             onClose={handleCloseL}
