@@ -7,8 +7,8 @@ import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { useCallback, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { ReactComponent as ExcelIcon } from '../../Assets/Icon_excel.svg';
 import { ReactComponent as CloseIcon } from '../../Assets/Icon_close.svg';
+import { ReactComponent as ExcelIcon } from '../../Assets/Icon_excel.svg';
 import { ReactComponent as LinkIcon } from '../../Assets/Icon_link.svg';
 import { ReactComponent as LogoutIcon } from '../../Assets/Icon_logout.svg';
 import { ReactComponent as TrashIcon } from '../../Assets/Icon_trash.svg';
@@ -180,6 +180,7 @@ function AdminTable() {
 
 
   const [lastHeader, setLastHeader] = useState<{ props: IPivotItemProps } | undefined>(undefined);
+  const [errorMess, setErrorMess] = useState("")
   const [openL, setOpenL] = useState(false);
   const handleOpenL = () => setOpenL(true);
   const handleCloseL = () => setOpenL(false);
@@ -229,7 +230,6 @@ function AdminTable() {
         headers: {Authorization : `token ${token}`}
       })
       .then( result => {
-        console.log(result.data.is_superuser)
         if (!result.data.is_superuser) {
           navigate("/")
         }
@@ -296,7 +296,6 @@ function AdminTable() {
     })
     .then( result => {
       localStorage.setItem('link', link)
-      console.log(result)
       handleCloseL()
     })
     .catch( error => {
@@ -329,7 +328,7 @@ function AdminTable() {
   }
 
   function createUser(){
-    console.log('llegue')
+    const errorMess = document.getElementById('login-error') as HTMLInputElement;
     axios
     .post(api + "users/", {
       username: firstField,
@@ -340,22 +339,20 @@ function AdminTable() {
       headers: {Authorization : `token ${token}`}
     })
     .then( result => {
-      const newList: IItem[] = items
-      newList.push({name: firstField, id: (items.length + 2).toString()})
-      console.log('new list')
-      console.log(newList)
-      setOriginalItemsCol(newList);
-      setOriginalItems(originalItemsCol);
-      setItems(originalItems);
-      console.log(items)
-      handleCloseC()
+      errorMess.style.display = "none"
+      handleCreate()
     })
     .catch( error => {
+      errorMess.style.display = "flex"
+      errorMess.style.margin = "-5vh 0 -1vh"
+
+      setErrorMess("Asegurate de llenar todos los campos")
       console.log(error)
     })
   }
-
+  
   function createCommunity(){
+    const errorMess = document.getElementById('login-error') as HTMLInputElement;
     axios
     .post(api + "comunidades/", {
       nombre: secondField,
@@ -365,22 +362,35 @@ function AdminTable() {
       headers: {Authorization : `token ${token}`}
     })
     .then( result => {
-      const newList: IItem[] = items
-      newList.push({name: secondField, id: (items.length + 2).toString()})
-      console.log('new list')
-      console.log(newList)
-      setOriginalItemsCom(newList);
-      setOriginalItems(originalItemsCom);
-      setItems(originalItems);
-      handleCloseC()
+      errorMess.style.display = "none"
+      handleCreate()
     })
     .catch( error => {
+      errorMess.style.display = "flex"
+      errorMess.style.margin = "-5vh 0 -1vh"
+
+      setErrorMess("Asegurate de llenar todos los campos")
       console.log(error)
     })
   }
+  const handleCreate = () => {
+    const newList: IItem[] = items
+    if (lastHeader?.props.headerText === 'Comunidad') {
+      newList.push({name: secondField, id: (items.length + 2).toString()})
+    } else {
+      newList.push({name: firstField, id: (items.length + 2).toString()})
+    }
+    setItems(newList);
+    setOriginalItems(newList);
+    if (lastHeader?.props.headerText === 'Comunidad') {
+      setOriginalItemsCom(newList);
+    } else {
+      setOriginalItemsCol(newList);
+    }
+    handleCloseC()
+  };
 
   function updateGoogleRow(){
-    console.log(row)
     axios
     .patch(api + "link/1/", {
       fila_inicial: row - 1
@@ -390,7 +400,6 @@ function AdminTable() {
     })
     .then( result => {
       localStorage.setItem('row', String(row-1))
-      console.log(result)
       handleCloseR()
     })
     .catch( error => {
@@ -405,7 +414,6 @@ function AdminTable() {
   }
 
   function deleteCommunity(id: string| undefined){
-    console.log(row)
     axios
     .delete(api + "comunidades/" + id +'/',
     {
@@ -420,7 +428,6 @@ function AdminTable() {
   }
 
   function deleteUser(id: string| undefined){
-    console.log(row)
     axios
     .delete(api + "users/" + id +'/',
     {
@@ -438,7 +445,6 @@ function AdminTable() {
     const updatedList = items.filter((item) => item.id !== id);
     setItems(updatedList);
     setOriginalItems(updatedList);
-    console.log(updatedList);
     if (lastHeader?.props.headerText === 'Comunidad') {
       setOriginalItemsCom(updatedList);
     } else {
@@ -447,6 +453,7 @@ function AdminTable() {
   };
 
   const onRenderCell = (item: IItem| undefined, index: number | undefined): JSX.Element => {
+    console.log(item?.name)
     return (
       <div className={classNames.itemCell}>
         <div className={classNames.itemContent}>
@@ -508,10 +515,11 @@ function AdminTable() {
               <IconButton onClick={handleCloseR} aria-label="close">
                 <CloseIcon />
               </IconButton>
-              <LinkTextField type="number" id="outlined-basic" color='secondary' label="Nueva fila de Google Sheets" variant="outlined" onChange={(newValue) => setRow(Number(newValue.target.value))} />
+              <LinkTextField required type="number" id="outlined-basic" color='secondary' label="Nueva fila de Google Sheets" variant="outlined" onChange={(newValue) => setRow(Number(newValue.target.value))} />
               <LinkButton onClick={updateGoogleRow}>
                 Confirmar
               </LinkButton>
+              <h3 className="error-message-admin" id="login-error"> {errorMess} </h3>
             </Box>
           </Modal>
             <Modal
@@ -528,6 +536,7 @@ function AdminTable() {
                 <LinkButton onClick={updateGoogleLink}>
                   Confirmar
                 </LinkButton>
+                <h3 className="error-message-admin" id="login-error"> {errorMess} </h3>
               </Box>
             </Modal>
           </div>
@@ -571,6 +580,7 @@ function AdminTable() {
                     <CreateButton onClick={lastHeader ? (lastHeader.props.headerText === "Comunidad" ? (createCommunity): (createUser)) : (createUser)}>
                       Crear
                     </CreateButton>
+                    <h3 className="error-message-admin" id="login-error"> {errorMess} </h3>
                   </Box>
                 </Modal>
               </div>

@@ -118,3 +118,10 @@
   height: 16.89vh;
   margin: 74vh 0 -3vh -2vw;
 }
+.error-message-admin{
+  color: rgb(221, 31, 31);
+  display: none;
+  align-self: center;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+}
