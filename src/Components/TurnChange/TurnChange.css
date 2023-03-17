@@ -85,9 +85,18 @@
 .Turn-label-text {
   font-family: 'DM Sans', sans-serif;
   font-weight: 700;
-  font-size: 5vmin;
+  font-size: 4.5vmin;
   text-align: center;
   color: #000000;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#turn-label{
+  white-space:normal;
+  overflow: auto;
+  text-overflow: initial;
 }
 
 .Turn-label-box {

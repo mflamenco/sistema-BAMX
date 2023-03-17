@@ -1,6 +1,7 @@
 import './TurnTable.css';
 import React, {useState, useEffect} from 'react';
 import logo from '../../Assets/Logo_bamx.svg';
+import video from "../../Assets/Bamx_video.mp4";
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 import { ListItem } from '@mui/material';
@@ -50,6 +51,8 @@ function TurnTable() {
   const [boxSevenNextTurn, setBoxSevenNextTurn] = useState("")
   const [boxEightNextTurn, setBoxEightNextTurn] = useState("")
 
+  const [src, setSrc] = useState("")
+
   const [token] = useState(localStorage.getItem('user-token') || null)
   const api = 'https://bamx-cxehn.ondigitalocean.app/'
   const [nextTurns, setNextTurns] = useState<NextItem[]>([])
@@ -69,7 +72,7 @@ function TurnTable() {
     updateTable()
   }, [completeList]);
 
-
+  
   function getWindowNumber(window: Number){
     if(window === 1){
       return "Caja A"
@@ -286,21 +289,26 @@ function TurnTable() {
           </div>
           <div className="Turn-right-container">
             <div className="Turn-title-container">
-              <h2 className="Turn-h2">Nombre de comunidad</h2>
-              <h2 className="Turn-h2">Turno</h2>
+              <h2 className="Turn-h2" id="name-community">Nombre de comunidad</h2>
+              <h2 className="Turn-h2" id="turn-text">Turno</h2>
             </div>
             <div className="Attention-box-three" id='box-six'>
-              <h3 className="Turn-h3">{boxSixNext}</h3>
+              <h3 className="Turn-h3" id="next-name-one">{boxSixNext}</h3>
               <h3 className="Turn-h3">{boxSixNextTurn}</h3>
             </div>
             <div className="Attention-box-four" id='box-seven'>
-              <h3 className="Turn-h3">{boxSevenNext}</h3>
+              <h3 className="Turn-h3" id="next-name-one">{boxSevenNext}</h3>
               <h3 className="Turn-h3">{boxSevenNextTurn}</h3>
             </div>
             <div className="Attention-box-three" id='box-eight'>
-              <h3 className="Turn-h3">{boxEightNext}</h3>
+              <h3 className="Turn-h3" id="next-name-one">{boxEightNext}</h3>
               <h3 className="Turn-h3">{boxEightNextTurn}</h3>
             </div>
+
+            <video controls={false} loop={true} autoPlay={true} muted={true} className="turn-video">
+              <source src={video} type="video/mp4"/>
+              Sorry, your browser doesn't support videos.
+            </video>
           </div>
         </div>
         <div className="Turn-date-container">

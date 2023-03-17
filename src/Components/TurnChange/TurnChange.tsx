@@ -288,7 +288,7 @@ function TurnChange() {
             <div className="Turn">
               <Text className='h1'> Asistiendo a</Text>
               <div className="Turn-label">
-                <Text className="Turn-label-text"> {currentTurn} </Text>
+                <Text className="Turn-label-text" id="turn-label"> {currentTurn} </Text>
                 <Text className="Turn-label-text"> {currentCommunity} </Text>
               </div>
               <TurnButton onClick={getTurn}>
