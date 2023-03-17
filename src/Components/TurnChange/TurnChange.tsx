@@ -111,9 +111,10 @@ function TurnChange() {
   const [currentTurn, setTurn] = useState("")
   const [currentCommunity, setCommunity] = useState("")
 
-  /*useEffect(() => {
-    setInterval(() => getTurn(), 30000);
-  }, []);*/
+  useEffect(
+    getTurnsActive, // <- function that will run on every dependency update
+    [] // <-- empty dependency array
+  )
 
   const api = 'https://bamx-cxehn.ondigitalocean.app/'
   const navigate = useNavigate();

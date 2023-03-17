@@ -134,3 +134,14 @@
   height: 16.89vh;
   margin: 80vh 0vw 0 1.5vw;
 }
+
+#box-one,
+#box-two,
+#box-three,
+#box-four,
+#box-five,
+#box-six,
+#box-seven,
+#box-eight{
+  visibility: hidden;
+}

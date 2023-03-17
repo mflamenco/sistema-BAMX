@@ -243,7 +243,7 @@ function RegisterCommunity() {
     
   }
 
-  async function postTurn(community: String){
+  async function postTurn(communityId: String){
     const textField = document.getElementById('outlined-basic-id') as HTMLInputElement;
     const turn = Number(localStorage.getItem("turn")) + 1
     console.log(turn)
@@ -251,7 +251,7 @@ function RegisterCommunity() {
     await axios
     .post(api + "turnos/", {
       numero: turn,
-      comunidad: community
+      comunidad: communityId
     },
     {
       headers: {Authorization : `token ${token}`}
