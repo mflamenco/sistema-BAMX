@@ -420,7 +420,10 @@ function AdminTable() {
       headers: {Authorization : `token ${token}`}
     })
     .then( result => {
-      handleDelete(id)
+    const updatedList = items.filter((item) => item.id !== id);
+    setItems(updatedList);
+    setOriginalItems(updatedList);
+    setOriginalItemsCom(updatedList);
     })
     .catch( error => {
       console.log(error)
@@ -434,23 +437,15 @@ function AdminTable() {
       headers: {Authorization : `token ${token}`}
     })
     .then( result => {
-      handleDelete(id)
+    const updatedList = items.filter((item) => item.id !== id);
+    setItems(updatedList);
+    setOriginalItems(updatedList);
+    setOriginalItemsCol(updatedList);
     })
     .catch( error => {
       console.log(error)
     })
   }
-
-  const handleDelete = (id: string| undefined) => {
-    const updatedList = items.filter((item) => item.id !== id);
-    setItems(updatedList);
-    setOriginalItems(updatedList);
-    if (lastHeader?.props.headerText === 'Comunidad') {
-      setOriginalItemsCom(updatedList);
-    } else {
-      setOriginalItemsCol(updatedList);
-    }
-  };
 
   const onRenderCell = (item: IItem| undefined, index: number | undefined): JSX.Element => {
     console.log(item?.name)
@@ -458,7 +453,7 @@ function AdminTable() {
       <div className={classNames.itemCell}>
         <div className={classNames.itemContent}>
           <div className={classNames.itemName}>{item?.name}</div>
-          <IconButton aria-label="delete" onClick={lastHeader ? (lastHeader.props.headerText === "Comunidad" ? (() => deleteCommunity(item?.id)): (() => deleteUser(item?.id))) : (() => deleteUser(item?.id)) }>
+          <IconButton aria-label="delete" onClick={lastHeader ? (lastHeader.props.headerText === "Comunidad" ? (() => deleteCommunity(item?.id)): (() => deleteUser(item?.id))) : (() => deleteUser(item?.id))}>
             <TrashIcon />
           </IconButton>
         </div>
