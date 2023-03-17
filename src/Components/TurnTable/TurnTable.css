@@ -32,7 +32,11 @@
 .Turn-title-container{
   display: flex;
   width: 100%;
-  justify-content:space-evenly;
+  justify-content: space-around;
+}
+
+#name-community{
+  margin-left: 2.5vw;
 }
 
 .Turn-left-container{
@@ -77,14 +81,14 @@
 
 .Attention-box-three,
 .Attention-box-four{
-  width: 56vmin;
+  width: 62vmin;
   height: 8vh;
   display: flex;
   align-items: center;
   justify-content: space-around;
   gap: 4vw;
   border-radius: 20px;
-  padding: 0vh 4.28vw;
+  padding: 0vh 3.28vw;
   padding-right: 1vw;
 }
 
@@ -125,7 +129,17 @@
 
 .Turn-h3{
   margin: 0;
+  max-width: 20vw;
   font-size: 3.12vmin;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#next-name-one,
+#next-name-two,
+#next-name-three{
+  min-width: 20vw;
 }
 
 .Turn-img{
@@ -133,6 +147,15 @@
   width: 6.87vw;
   height: 16.89vh;
   margin: 80vh 0vw 0 1.5vw;
+}
+
+.turn-video{
+  margin: 5vh;
+  width: 35vw;
+  height: 28vh;
+  border: 5px solid;
+  border-image: linear-gradient(180deg, #D00C2B 0%, #E96D10 35.42%, #F7A600 70.83%, #EF8018 100%) 1;
+  background-image: linear-gradient(180deg, #D00C2B 0%, #E96D10 35.42%, #F7A600 70.83%, #EF8018 100%);
 }
 
 #box-one,
