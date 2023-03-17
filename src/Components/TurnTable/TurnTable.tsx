@@ -72,16 +72,7 @@ function TurnTable() {
     updateTable()
   }, [completeList]);
 
-  useEffect(
-    setVideoSource, // <- function that will run on every dependency update
-    [] // <-- empty dependency array
-  )
-
-
-  function setVideoSource(){
-    //setSrc(URL.createObjectURL(video))
-  }
-
+  
   function getWindowNumber(window: Number){
     if(window === 1){
       return "Caja A"
