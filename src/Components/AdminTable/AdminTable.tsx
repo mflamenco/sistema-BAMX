@@ -195,6 +195,7 @@ function AdminTable() {
 
   const [hoverLogout, setHoverLogout] = useState('Logout');
   const [hoverLink, setHoverLink] = useState('Logout');
+  const [hoverRow, setHoverRow] = useState('Logout');
   const [originalItemsCol, setOriginalItemsCol] = useState([{name: '', id: ''}]);
   const [originalItemsCom, setOriginalItemsCom] = useState([{name: '', id: ''}]);
   const [token] = useState(localStorage.getItem('user-token') || null)
@@ -307,12 +308,16 @@ function AdminTable() {
     if (isHover) {
       if (indexButton === 0) {
         setHoverLogout('Logout-hover')
+      } else if (indexButton === 1) {
+        setHoverRow('Logout-hover')
       } else {
         setHoverLink('Logout-hover')
       }
     } else {
       if (indexButton === 0) {
         setHoverLogout('Logout')
+      } else if (indexButton === 1) {
+        setHoverRow('Logout')
       } else {
         setHoverLink('Logout')
       }
@@ -399,6 +404,36 @@ function AdminTable() {
     navigate("/")
   }
 
+  function deleteCommunity(id: string| undefined){
+    console.log(row)
+    axios
+    .delete(api + "comunidades/" + id +'/',
+    {
+      headers: {Authorization : `token ${token}`}
+    })
+    .then( result => {
+      handleDelete(id)
+    })
+    .catch( error => {
+      console.log(error)
+    })
+  }
+
+  function deleteUser(id: string| undefined){
+    console.log(row)
+    axios
+    .delete(api + "users/" + id +'/',
+    {
+      headers: {Authorization : `token ${token}`}
+    })
+    .then( result => {
+      handleDelete(id)
+    })
+    .catch( error => {
+      console.log(error)
+    })
+  }
+
   const handleDelete = (id: string| undefined) => {
     const updatedList = items.filter((item) => item.id !== id);
     setItems(updatedList);
@@ -416,7 +451,7 @@ function AdminTable() {
       <div className={classNames.itemCell}>
         <div className={classNames.itemContent}>
           <div className={classNames.itemName}>{item?.name}</div>
-          <IconButton aria-label="delete" onClick={() => handleDelete(item?.id) }>
+          <IconButton aria-label="delete" onClick={lastHeader ? (lastHeader.props.headerText === "Comunidad" ? (() => deleteCommunity(item?.id)): (() => deleteUser(item?.id))) : (() => deleteUser(item?.id)) }>
             <TrashIcon />
           </IconButton>
         </div>
@@ -444,8 +479,8 @@ function AdminTable() {
           <div className="Button-container">
             <BarButton 
             onClick={handleOpenL}
-            onMouseEnter={() => hoverHandler(true,1)}
-            onMouseLeave={() => hoverHandler(false,1)} 
+            onMouseEnter={() => hoverHandler(true,2)}
+            onMouseLeave={() => hoverHandler(false,2)} 
             startIcon={<LinkIcon className={hoverLink} width={'2vw'} />} >
               Actualizar google sheets
             </BarButton>
@@ -453,7 +488,7 @@ function AdminTable() {
             onMouseEnter={() => hoverHandler(true,1)}
             onMouseLeave={() => hoverHandler(false,1)} 
             onClick={handleOpenR}
-            startIcon={<ExcelIcon className={hoverLink} width={'2vw'} />} >
+            startIcon={<ExcelIcon className={hoverRow} width={'2vw'} />} >
               Actualizar fila inicial
             </BarButton>
             <BarButton 
